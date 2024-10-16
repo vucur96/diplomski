@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="1.1" author="tamara.vucur">
+        <createTable tableName="app_user">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="app_user_pk"/>
+            </column>
+            <column name="username" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="app_user_username_unq"/>
+            </column>
+            <column name="password" type="varchar(250)"/>
+            <column name="first_name" type="varchar(250)"/>
+            <column name="last_name" type="varchar(250)"/>
+            <column name="address" type="varchar(250)"/>
+            <column name="phone" type="varchar(250)"/>
+            <column name="email" type="varchar(250)">
+                <constraints unique="true" uniqueConstraintName="app_user_email_unq"/>
+            </column>
+            <column name="imageurl" type="varchar(250)"/>
+            <column name="type" type="varchar(250)"/>
+            <column name="status" type="smallint"/>
+            <column name="school" type="smallint"/>
+            <column name="student_grade" type="integer"/>
+            <column name="cv_url" type="varchar(250)"/>
+            <column name="wdy_hear_about_us" type="varchar(250)"/>
+            <column name="grade" type="smallint"/>
+            <column name="working_from" type="time(6)" />
+            <column name="working_to" type="time(6)" />
+        </createTable>
+        <addAutoIncrement  tableName="app_user" columnName="id" columnDataType="bigint" startWith="1" incrementBy="50"/>
+    </changeSet>
+    <changeSet id="1.2" author="tamara.vucur">
+        <createTable tableName="subject">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="subject_pk"/>
+            </column>
+            <column name="name" type="varchar(250)"/>
+            <column name="status" type="varchar(250)"/>
+            <column name="description" type="varchar(350)"/>
+        </createTable>
+        <addAutoIncrement tableName="subject" columnName="id" columnDataType="bigint" startWith="1" incrementBy="50"/>
+    </changeSet>
+    <changeSet id="1.3" author="tamara.vucur">
+        <createTable tableName="lesson">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="lesson_pk"/>
+            </column>
+            <column name="subject_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="date" type="date"/>
+            <column name="time" type="time(6)"/>
+            <column name="status" type="smallint"/>
+            <column name="message" type="varchar(250)"/>
+            <column name="rating_for_student" type="integer"/>
+            <column name="review_for_student" type="varchar(250)"/>
+            <column name="rating_for_teacher" type="integer"/>
+            <column name="review_for_teacher" type="varchar(250)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="lesson" baseColumnNames="teacher_id" constraintName="teacher_lesson_fk"  referencedTableName="app_user" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="lesson" baseColumnNames="subject_id" constraintName="subject_lesson_fk" referencedTableName="subject" referencedColumnNames="id" />
+        <addAutoIncrement tableName="lesson" columnName="id" columnDataType="bigint" startWith="1" incrementBy="50"/>
+    </changeSet>
+    <changeSet id="1.4" author="tamara.vucur">
+        <createTable tableName="registration_request">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="registration_request_pk"/>
+            </column>
+            <column name="teacher_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="status" type="smallint"/>
+            <column name="created" type="timestamp(6) without time zone"/>
+            <column name="changed" type="timestamp(6) without time zone"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="registration_request" baseColumnNames="teacher_id" constraintName="teacher_request_fk" referencedTableName="app_user" referencedColumnNames="id" />
+        <addAutoIncrement tableName="registration_request" columnName="id" columnDataType="bigint" startWith="1" incrementBy="50"/>
+    </changeSet>
+    <changeSet id="1.5" author="tamara.vucur">
+        <createTable tableName="students_lessons">
+            <column name="student_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="student_lesson_pk"/>
+            </column>
+            <column name="lesson_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="lesson_student_pk"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="students_lessons" baseColumnNames="student_id" constraintName="student_lesson_fk"  referencedTableName="app_user" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="students_lessons" baseColumnNames="lesson_id" constraintName="lesson_student_fk" referencedTableName="lesson" referencedColumnNames="id" />
+    </changeSet>
+    <changeSet id="1.6" author="tamara.vucur">
+        <createTable tableName="teachers_subjects">
+            <column name="teacher_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="teacher_subject_pk"/>
+            </column>
+            <column name="subject_id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="subject_teacher_pk"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="teachers_subjects" baseColumnNames="teacher_id" constraintName="teacher_subject_fk"  referencedTableName="app_user" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="teachers_subjects" baseColumnNames="subject_id" constraintName="subject_teacher_fk" referencedTableName="subject" referencedColumnNames="id" />
+    </changeSet>
+    <changeSet id="1.7" author="tamara.vucur">
+        <insert tableName="app_user">
+            <column name="username" value="admin" />
+            <column name="password" value="$2a$10$RkVNG7UttF2egqEQWHNLNeZCK5zy01fcLdz/GVwL1W53CfeQIE6ZW" />
+            <column name="type" value="AppUser"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1.10" author="tamara.vucur">
+        <renameSequence newSequenceName="app_user_seq"
+                        oldSequenceName="app_user_id_seq"
+                        schemaName="public"/>
+
+        <renameSequence newSequenceName="lesson_seq"
+                        oldSequenceName="lesson_id_seq"
+                        schemaName="public"/>
+
+        <renameSequence newSequenceName="subject_seq"
+                        oldSequenceName="subject_id_seq"
+                        schemaName="public"/>
+
+        <renameSequence newSequenceName="registration_request_seq"
+                        oldSequenceName="registration_request_id_seq"
+                        schemaName="public"/>
+    </changeSet>
+    <changeSet id="1.11" author="tamara.vucur">
+        <insert tableName="subject">
+            <column name="name" value="Matematika" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Fizika" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Hemija" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Informatika" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Programiranje" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Srpski jezik i knjizevnost" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Engleski" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Nemacki" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Italijanski" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Francuski" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Spanski" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Latinski" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Biologija" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Istorija" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Geografija" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+        <insert tableName="subject">
+            <column name="name" value="Svet oko nas" />
+            <column name="status" value="APPROVED" />
+            <column name="description" value="" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>

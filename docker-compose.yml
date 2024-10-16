@@ -1,0 +1,40 @@
+services:
+  frontend:
+    build: ./vue_front
+    ports:
+      - 5173:5173 
+    depends_on: 
+      - backend
+    networks:
+      - app-network
+  backend:
+    build: ./backend
+    depends_on:
+      - database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/testbaza
+      - SPRING_DATASOURCE_USERNAME=tamara
+      - SPRING_DATASOURCE_PASSWORD=tamara
+    ports:
+      - 8084:8084
+    networks:
+      - app-network
+  database:
+    image: postgres
+    restart: always
+    environment:
+        - POSTGRES_USER=tamara
+        - POSTGRES_PASSWORD=tamara
+        - POSTGRES_DB=testbaza
+    ports:
+        - "5432:5432"
+    volumes:
+        - pgdata:/var/lib/postgresql/data 
+    networks:
+      - app-network
+ 
+volumes:
+  pgdata:
+
+networks:
+  app-network:
