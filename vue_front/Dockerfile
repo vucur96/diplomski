@@ -1,13 +1,9 @@
 # Use the official Node.js alpine image as a base image
 FROM node:alpine
 
-# Install Git
-RUN apk add --no-cache git
 
 # Set the working directory inside the container
 WORKDIR /app
-
-RUN git clone <repo-url> .
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
