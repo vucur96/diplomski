@@ -109,7 +109,6 @@ public class LessonService {
         }
         return retList;
     }
-edrtrdxc
     public List<LessonRequest> getLessonRequests() {
         List<Lesson> lessons = lessonRepo.findLessonRequests();
         List<LessonRequest> retList = new ArrayList<>();
