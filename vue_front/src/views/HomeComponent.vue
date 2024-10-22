@@ -10,6 +10,10 @@ export default{
     data(){
         return{
         subjects:[],
+        sortOrder: {
+        subject: 'asc',
+        teacher: 'asc',
+      },
         numberOfTeachers:"",
         numberOfStudents:"",
         lessonsInLast7days:"",
@@ -39,12 +43,26 @@ export default{
         SubjectService.searchSubjects(this.searchParam).then()
         },
 
-        sortBySubjectName(){
-        this.subjects=this.subjects.sort((a,b)=>{return a.name>b.name?1:-1})
+        sortBySubjectName() {
+          this.sortOrder.subject = this.sortOrder.subject === 'asc' ? 'desc' : 'asc';
+          this.subjects.sort((a, b) => {
+            const compareA = a.name.toLowerCase();
+            const compareB = b.name.toLowerCase();
+            return this.sortOrder.subject === 'asc' ? (compareA < compareB ? -1 : 1) : (compareA < compareB ? 1 : -1);
+          });
         },
-        sortByFirstName(){
-        }
-    },components:{
+        sortByTeacherName() {
+          this.sortOrder.teacher = this.sortOrder.teacher === 'asc' ? 'desc' : 'asc';
+          this.subjects.forEach(subject => {
+            subject.teachers.sort((a, b) => {
+              const compareA = a.firstName.toLowerCase();
+              const compareB = b.firstName.toLowerCase();
+              return this.sortOrder.teacher === 'asc' ? (compareA < compareB ? -1 : 1) : (compareA < compareB ? 1 : -1);
+            });
+          });
+        },
+      },
+components:{
       MenuComponent
     }
 
@@ -72,22 +90,42 @@ export default{
             <input type='text' name='searchText' v-model='searchParam'>
              <button type="button" class="btn btn-secondary" @click='search'>Search</button>
         </form>
-        <button  type="button" class="btn btn-secondary" @click='sortByFirstName'>Sort by first name </button>
-        <button  type="button" class="btn btn-secondary" @click='sortBySubjectName'>Sort by subject name</button>
-        <br>
 
         <h2>Our teachers</h2>
-        <div  class="table"
-         v-for="s in subjects" :key="s.name">
-            {{s.name}}:
-            <br>
-            <div v-for="t in s.teachers" :key="t.id" style="colour">
-                    -- {{t.firstName}} {{t.lastName}}
-                    <br>
+        <table  class="table">
+          <thead>
+            <tr>
+              <th @click="sortBySubjectName">Subject Name</th>
+              <th @click="sortByTeacherName">Teacher Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="s in sortedSubjects" :key="s.name">
+          <td>{{ s.name }}</td>
+          <td>
+            <div v-for="t in s.teachers" :key="t.id">
+              {{ t.firstName }} {{ t.lastName }}
             </div>
-        </div>
+          </td>
+        </tr>
+      </tbody>
+        </table>
         <p v-if='subjects.length==0'>We don't have any teachers yet!</p>
 
       </div>
     </div>
 </template>
+
+<style scoped>
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.table th {
+  cursor: pointer;
+}
+</style>
