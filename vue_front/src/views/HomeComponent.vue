@@ -38,6 +38,24 @@ export default{
       })
 
     },
+    computed: {
+    sortedSubjects() {
+      return this.subjects.map(subject => {
+        return {
+          ...subject,
+          teachers: [...subject.teachers].sort((a, b) => {
+            const compareA = a.firstName.toLowerCase();
+            const compareB = b.firstName.toLowerCase();
+            return compareA < compareB ? -1 : compareA > compareB ? 1 : 0;
+          })
+        };
+      }).sort((a, b) => {
+        const compareA = a.name.toLowerCase();
+        const compareB = b.name.toLowerCase();
+        return compareA < compareB ? -1 : compareA > compareB ? 1 : 0;
+      });
+    },
+    },
     methods:{
         search(){
         SubjectService.searchSubjects(this.searchParam).then()
@@ -100,7 +118,7 @@ components:{
         </tr>
       </thead>
       <tbody>
-        <tr v-for="s in sortedSubjects" :key="s.name">
+        <tr v-for="s in subjects" :key="s.name">
           <td>{{ s.name }}</td>
           <td>
             <div v-for="t in s.teachers" :key="t.id">
