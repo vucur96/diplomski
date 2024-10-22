@@ -1,4 +1,3 @@
-import Student from './student.js'
 import Subject from './subject.js'
 
 class Lesson{
