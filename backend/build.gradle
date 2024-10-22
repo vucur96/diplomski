@@ -43,6 +43,3 @@ dependencies {implementation 'org.springframework.boot:spring-boot-starter-data-
 	testImplementation group: 'com.h2database', name: 'h2', version: '2.2.224'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
