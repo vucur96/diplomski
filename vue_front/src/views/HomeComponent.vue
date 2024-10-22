@@ -11,8 +11,8 @@ export default{
         return{
         subjects:[],
         sortOrder: {
-        subject: 'asc',
-        teacher: 'asc',
+        subjectName: 'asc',
+        firstName: 'asc',
       },
         numberOfTeachers:"",
         numberOfStudents:"",
@@ -39,47 +39,51 @@ export default{
 
     },
     computed: {
-    sortedSubjects() {
+    filteredSubjects() {
+      const query = this.searchParam.toLowerCase();
       return this.subjects.map(subject => {
         return {
           ...subject,
-          teachers: [...subject.teachers].sort((a, b) => {
-            const compareA = a.firstName.toLowerCase();
-            const compareB = b.firstName.toLowerCase();
-            return compareA < compareB ? -1 : compareA > compareB ? 1 : 0;
+          teachers: subject.teachers.filter(teacher => {
+            const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+            return fullName.includes(query);
           })
         };
-      }).sort((a, b) => {
+      }).filter(subject => subject.teachers.length > 0); 
+    },
+    sortedFilteredSubjects() {
+      
+      let sorted = [...this.filteredSubjects];
+
+      sorted.sort((a, b) => {
         const compareA = a.name.toLowerCase();
         const compareB = b.name.toLowerCase();
-        return compareA < compareB ? -1 : compareA > compareB ? 1 : 0;
+        return this.sortOrder.subjectName === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
       });
-    },
-    },
-    methods:{
-        search(){
-        SubjectService.searchSubjects(this.searchParam).then()
-        },
 
-        sortBySubjectName() {
-          this.sortOrder.subject = this.sortOrder.subject === 'asc' ? 'desc' : 'asc';
-          this.subjects.sort((a, b) => {
-            const compareA = a.name.toLowerCase();
-            const compareB = b.name.toLowerCase();
-            return this.sortOrder.subject === 'asc' ? (compareA < compareB ? -1 : 1) : (compareA < compareB ? 1 : -1);
-          });
-        },
-        sortByTeacherName() {
-          this.sortOrder.teacher = this.sortOrder.teacher === 'asc' ? 'desc' : 'asc';
-          this.subjects.forEach(subject => {
-            subject.teachers.sort((a, b) => {
-              const compareA = a.firstName.toLowerCase();
-              const compareB = b.firstName.toLowerCase();
-              return this.sortOrder.teacher === 'asc' ? (compareA < compareB ? -1 : 1) : (compareA < compareB ? 1 : -1);
-            });
-          });
-        },
-      },
+      
+      sorted.forEach(subject => {
+        subject.teachers.sort((a, b) => {
+          const compareA = a.firstName.toLowerCase();
+          const compareB = b.firstName.toLowerCase();
+          return this.sortOrder.firstName === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
+        });
+      });
+
+      return sorted;
+    }
+  },
+  methods: {
+    search() {
+      
+    },
+    sortByFirstName() {
+      this.sortOrder.firstName = this.sortOrder.firstName === 'asc' ? 'desc' : 'asc';
+    },
+    sortBySubjectName() {
+      this.sortOrder.subjectName = this.sortOrder.subjectName === 'asc' ? 'desc' : 'asc';
+    }
+  },
 components:{
       MenuComponent
     }
@@ -103,7 +107,7 @@ components:{
         </p>
         <hr>
 
-        <form>
+        <form @submit.prevent="search">
             Search:
             <input type='text' name='searchText' v-model='searchParam'>
              <button type="button" class="btn btn-secondary" @click='search'>Search</button>
