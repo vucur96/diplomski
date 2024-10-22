@@ -1,4 +1,4 @@
-package backend;
+package etf.bg.diplomski.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
