@@ -40,31 +40,49 @@ export default{
     },
     computed: {
       sortedFilteredSubjects() {
-      const query = this.searchParam.toLowerCase();
-    
-      if (!query) {
-        return this.subjects;
-      }
+        const query = this.searchParam.toLowerCase();
 
-    
-    return this.subjects
-      .map(subject => {
-        const filteredTeachers = subject.teachers.filter(teacher => {
-          const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-          return fullName.includes(query);
-        });
+        let filteredSubjects = this.subjects
+          .map(subject => {
+            const filteredTeachers = subject.teachers.filter(teacher => {
+              const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+              return fullName.includes(query);
+            });
 
-        if (subject.name.toLowerCase().includes(query) || filteredTeachers.length > 0) {
+            if (subject.name.toLowerCase().includes(query) || filteredTeachers.length > 0) {
+              return {
+                ...subject,
+                teachers: filteredTeachers, 
+              };
+            }
+
+            return null; 
+          })
+          .filter(subject => subject !== null && subject.teachers.length > 0); 
+
+
+        filteredSubjects = filteredSubjects.map(subject => {
           return {
             ...subject,
-            teachers: filteredTeachers, 
+            teachers: [...subject.teachers].sort((a, b) => {
+              const compareA = a.firstName.toLowerCase();
+              const compareB = b.firstName.toLowerCase();
+              return this.sortOrder.teacher === 'asc'
+                ? compareA.localeCompare(compareB)
+                : compareB.localeCompare(compareA);
+            }),
           };
-        }
+        });
+        filteredSubjects.sort((a, b) => {
+          const compareA = a.name.toLowerCase();
+          const compareB = b.name.toLowerCase();
+          return this.sortOrder.subject === 'asc'
+            ? compareA.localeCompare(compareB)
+            : compareB.localeCompare(compareA);
+        });
 
-        return null; 
-      })
-      .filter(subject => subject !== null && subject.teachers.length > 0); 
-  }
+        return filteredSubjects;
+        }
   },
   methods: {
     sortBySubjectName() {
@@ -74,9 +92,9 @@ export default{
       this.sortOrder.teacher = this.sortOrder.teacher === 'asc' ? 'desc' : 'asc';
     },
   },
-components:{
+  components:{
       MenuComponent
-    }
+  }
 
 }
 </script>
@@ -98,53 +116,41 @@ components:{
         <hr>
 
         <div>
-    <h2>Our Teachers</h2>
+          <h2>Our Teachers</h2>
 
-    <form @submit.prevent>
-      <input
-        type="text"
-        placeholder="Search for a teacher..."
-        v-model="searchParam"
-      />
-    </form>
+          <form @submit.prevent>
+            <input
+              type="text"
+              placeholder="Search ..."
+              v-model="searchParam"
+            />
+          </form>
 
-    <table>
-      <thead>
-        <tr>
-          <th @click="sortBySubjectName">Subject Name</th>
-          <th @click="sortByTeacherName">Teacher Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="s in sortedFilteredSubjects" :key="s.name">
-          <td>{{ s.name }}</td>
-          <td>
-            <div v-for="t in s.teachers" :key="t.id">
-              {{ t.firstName }} {{ t.lastName }}
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          <table>
+            <thead>
+              <tr>
+                <th @click="sortBySubjectName">Subject Name</th>
+                <th @click="sortByTeacherName">Teacher Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="s in sortedFilteredSubjects" :key="s.name">
+                <td>{{ s.name }}</td>
+                <td>
+                  <div v-for="t in s.teachers" :key="t.id">
+                    {{ t.firstName }} {{ t.lastName }}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-    <p v-if="sortedFilteredSubjects.length === 0">
-      We don't have any teachers yet!
-    </p>
-  </div>
+          <p v-if="sortedFilteredSubjects.length === 0">
+            We don't have any subjects yet!
+          </p>
+        </div>
       </div>
     </div>
 </template>
 
-<style scoped>
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.table th, .table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-.table th {
-  cursor: pointer;
-}
-</style>
+
