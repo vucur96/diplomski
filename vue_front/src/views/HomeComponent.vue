@@ -39,7 +39,7 @@ export default{
 
     },
     computed: {
-      sortedFilteredSubjects() {
+      filteredSubjects() {
         const query = this.searchParam.toLowerCase();
         let filteredSubjects
 
@@ -47,23 +47,25 @@ export default{
            filteredSubjects=this.subjects;
         }else{
 
-        filteredSubjects = this.subjects
-          .map(subject => {
-            const filteredTeachers = subject.teachers.filter(teacher => {
-              const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-              return fullName.includes(query);
-            });
+          filteredSubjects = this.subjects
+            .map(subject => {
+              const subjectMatches = subject.name.toLowerCase().includes(query);
 
-            if (subject.name.toLowerCase().includes(query) || filteredTeachers.length > 0) {
-              return {
-                ...subject,
-                teachers: filteredTeachers, 
-              };
-            }
+              const filteredTeachers = subject.teachers.filter(teacher => {
+                const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+                return fullName.includes(query);
+              });
 
-            return null; 
-          })
-          .filter(subject => subject !== null && subject.teachers.length > 0); 
+              if (subjectMatches || filteredTeachers.length > 0) {
+                return {
+                  ...subject,
+                  teachers: subjectMatches ? subject.teachers : filteredTeachers, 
+                };
+              }
+
+              return null;
+            })
+            .filter(subject => subject !== null && subject.teachers.length > 0);
         }
 
         filteredSubjects = filteredSubjects.map(subject => {
@@ -87,7 +89,7 @@ export default{
         });
 
         return filteredSubjects;
-        }
+    }
   },
   methods: {
     sortBySubjectName() {
@@ -100,7 +102,6 @@ export default{
   components:{
       MenuComponent
   }
-
 }
 </script>
 
@@ -157,5 +158,66 @@ export default{
       </div>
     </div>
 </template>
+
+
+<style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+th:hover {
+  background-color: #45a049;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+input[type='text'] {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-secondary {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-secondary:hover {
+  background-color: #45a049;
+}
+</style>
 
 
