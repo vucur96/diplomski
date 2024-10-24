@@ -39,45 +39,32 @@ export default{
 
     },
     computed: {
-    sortedFilteredSubjects() {
-      const query = this.searchParam.toLowerCase(); // Lowercase search query for case-insensitive search
+      sortedFilteredSubjects() {
+      const query = this.searchParam.toLowerCase();
+    
+      if (!query) {
+        return this.subjects;
+      }
 
-      // Filter by teacher's name based on search query
-      let filteredSubjects = this.subjects.map(subject => {
-        return {
-          ...subject,
-          teachers: subject.teachers.filter(teacher => {
-            const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-            return fullName.includes(query);
-          }),
-        };
-      }).filter(subject => subject.teachers.length > 0); // Remove subjects with no matching teachers
+    
+    return this.subjects
+      .map(subject => {
+        const filteredTeachers = subject.teachers.filter(teacher => {
+          const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+          return fullName.includes(query);
+        });
 
-      // Sort teachers within subjects by first name
-      filteredSubjects = filteredSubjects.map(subject => {
-        return {
-          ...subject,
-          teachers: [...subject.teachers].sort((a, b) => {
-            const compareA = a.firstName.toLowerCase();
-            const compareB = b.firstName.toLowerCase();
-            return this.sortOrder.teacher === 'asc'
-              ? compareA.localeCompare(compareB)
-              : compareB.localeCompare(compareA);
-          }),
-        };
-      });
+        if (subject.name.toLowerCase().includes(query) || filteredTeachers.length > 0) {
+          return {
+            ...subject,
+            teachers: filteredTeachers, 
+          };
+        }
 
-      // Sort subjects by subject name
-      filteredSubjects.sort((a, b) => {
-        const compareA = a.name.toLowerCase();
-        const compareB = b.name.toLowerCase();
-        return this.sortOrder.subject === 'asc'
-          ? compareA.localeCompare(compareB)
-          : compareB.localeCompare(compareA);
-      });
-
-      return filteredSubjects;
-    },
+        return null; 
+      })
+      .filter(subject => subject !== null && subject.teachers.length > 0); 
+  }
   },
   methods: {
     sortBySubjectName() {
