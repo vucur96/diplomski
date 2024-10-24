@@ -8,12 +8,12 @@ import MenuComponent from './menu.vue'
 export default{
     name:'HomeComponent',
     data(){
-        return{
-        subjects:[],
+      return{
+        subjects: [], 
         sortOrder: {
-        subjectName: 'asc',
-        firstName: 'asc',
-      },
+          subject: 'asc',
+          teacher: 'asc',
+        },
         numberOfTeachers:"",
         numberOfStudents:"",
         lessonsInLast7days:"",
@@ -39,50 +39,53 @@ export default{
 
     },
     computed: {
-    filteredSubjects() {
-      const query = this.searchParam.toLowerCase();
-      return this.subjects.map(subject => {
+    sortedFilteredSubjects() {
+      const query = this.searchParam.toLowerCase(); // Lowercase search query for case-insensitive search
+
+      // Filter by teacher's name based on search query
+      let filteredSubjects = this.subjects.map(subject => {
         return {
           ...subject,
           teachers: subject.teachers.filter(teacher => {
             const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
             return fullName.includes(query);
-          })
+          }),
         };
-      }).filter(subject => subject.teachers.length > 0); 
-    },
-    sortedFilteredSubjects() {
-      
-      let sorted = [...this.filteredSubjects];
+      }).filter(subject => subject.teachers.length > 0); // Remove subjects with no matching teachers
 
-      sorted.sort((a, b) => {
+      // Sort teachers within subjects by first name
+      filteredSubjects = filteredSubjects.map(subject => {
+        return {
+          ...subject,
+          teachers: [...subject.teachers].sort((a, b) => {
+            const compareA = a.firstName.toLowerCase();
+            const compareB = b.firstName.toLowerCase();
+            return this.sortOrder.teacher === 'asc'
+              ? compareA.localeCompare(compareB)
+              : compareB.localeCompare(compareA);
+          }),
+        };
+      });
+
+      // Sort subjects by subject name
+      filteredSubjects.sort((a, b) => {
         const compareA = a.name.toLowerCase();
         const compareB = b.name.toLowerCase();
-        return this.sortOrder.subjectName === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
+        return this.sortOrder.subject === 'asc'
+          ? compareA.localeCompare(compareB)
+          : compareB.localeCompare(compareA);
       });
 
-      
-      sorted.forEach(subject => {
-        subject.teachers.sort((a, b) => {
-          const compareA = a.firstName.toLowerCase();
-          const compareB = b.firstName.toLowerCase();
-          return this.sortOrder.firstName === 'asc' ? compareA.localeCompare(compareB) : compareB.localeCompare(compareA);
-        });
-      });
-
-      return sorted;
-    }
+      return filteredSubjects;
+    },
   },
   methods: {
-    search() {
-      
-    },
-    sortByFirstName() {
-      this.sortOrder.firstName = this.sortOrder.firstName === 'asc' ? 'desc' : 'asc';
-    },
     sortBySubjectName() {
-      this.sortOrder.subjectName = this.sortOrder.subjectName === 'asc' ? 'desc' : 'asc';
-    }
+      this.sortOrder.subject = this.sortOrder.subject === 'asc' ? 'desc' : 'asc';
+    },
+    sortByTeacherName() {
+      this.sortOrder.teacher = this.sortOrder.teacher === 'asc' ? 'desc' : 'asc';
+    },
   },
 components:{
       MenuComponent
@@ -107,22 +110,26 @@ components:{
         </p>
         <hr>
 
-        <form @submit.prevent="search">
-            Search:
-            <input type='text' name='searchText' v-model='searchParam'>
-             <button type="button" class="btn btn-secondary" @click='search'>Search</button>
-        </form>
+        <div>
+    <h2>Our Teachers</h2>
 
-        <h2>Our teachers</h2>
-        <table  class="table">
-          <thead>
-            <tr>
-              <th @click="sortBySubjectName">Subject Name</th>
-              <th @click="sortByTeacherName">Teacher Name</th>
+    <form @submit.prevent>
+      <input
+        type="text"
+        placeholder="Search for a teacher..."
+        v-model="searchParam"
+      />
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th @click="sortBySubjectName">Subject Name</th>
+          <th @click="sortByTeacherName">Teacher Name</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="s in subjects" :key="s.name">
+        <tr v-for="s in sortedFilteredSubjects" :key="s.name">
           <td>{{ s.name }}</td>
           <td>
             <div v-for="t in s.teachers" :key="t.id">
@@ -131,9 +138,12 @@ components:{
           </td>
         </tr>
       </tbody>
-        </table>
-        <p v-if='subjects.length==0'>We don't have any teachers yet!</p>
+    </table>
 
+    <p v-if="sortedFilteredSubjects.length === 0">
+      We don't have any teachers yet!
+    </p>
+  </div>
       </div>
     </div>
 </template>
