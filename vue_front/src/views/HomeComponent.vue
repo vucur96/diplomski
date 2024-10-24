@@ -41,8 +41,13 @@ export default{
     computed: {
       sortedFilteredSubjects() {
         const query = this.searchParam.toLowerCase();
+        let filteredSubjects
 
-        let filteredSubjects = this.subjects
+        if (!query) {
+           filteredSubjects=this.subjects;
+        }else{
+
+        filteredSubjects = this.subjects
           .map(subject => {
             const filteredTeachers = subject.teachers.filter(teacher => {
               const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
@@ -59,7 +64,7 @@ export default{
             return null; 
           })
           .filter(subject => subject !== null && subject.teachers.length > 0); 
-
+        }
 
         filteredSubjects = filteredSubjects.map(subject => {
           return {
