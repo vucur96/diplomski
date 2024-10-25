@@ -1,38 +1,36 @@
 <template>
 <div>
     <MenuComponent/>
-    <form>
-        Search:
-        <input type='text' name='searchText' v-model='searchParam'>
-        <button @click='search'>Search</button>
-    </form>
-
-    Sort by first name:
-    <button @click='sortByTeachersFirstName'>Sort by teachers first name</button>
-    <br>
-    Sort by last name:
-    <button @click='sortByTeachersLastName'>Sort by teachers last name</button>
-    <br>
-
-
     <h2>Our teachers</h2>
-    <table  v-if='teachers.length>0' >
-        <tr>
-            <th>Name</th>
+    <form>
+        <input
+            type="text"
+            placeholder="Search ..."
+            v-model="searchParam"
+        />
+    </form>
+    <table>
+        <thead>
+            <tr>
+            <th @click="sortByTeachersName"> Name</th>
             <th>Subjects</th>
             <th>Greads</th>
             <th>Photo</th>
-        </tr>
-        <tr v-for='t in teachers' :key="t.username">
-            <td v-if="type!='student'">{{t.firstName}} {{t.lastName}}</td>
-            <td v-if="type=='student'"><button @click="teacherInfo(t)">{{t.firstName}} {{t.lastName}}</button></td>
-            <td>
-                <div v-for="s in t.subjects" :key="s.name">{{s.name}}</div>
-            </td>
-            <td>{{t.grade}}</td>
-            <td><img v-bind:src=t.imgURL width="50" height="50" alt="Image not found"></td>
-        </tr>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="s in filteredTeachers" :key="s.name">
+                <td v-if="type!='student'">{{t.firstName}} {{t.lastName}}</td>
+                <td v-if="type=='student'"><button @click="teacherInfo(t)">{{t.firstName}} {{t.lastName}}</button></td>
+                <td>
+                    <div v-for="s in t.subjects" :key="s.name">{{s.name}}</div>
+                </td>
+                <td>{{t.grade}}</td>
+                <td><img v-bind:src=t.imgURL width="50" height="50" alt="Image not found"></td>
+            </tr>
+        </tbody>
     </table>
+
     <p v-if='teachers.length==0'>We don't have any teachers yet!</p>
 </div>
 </template>
@@ -49,6 +47,7 @@ export default {
             type:"",
             currentStudent:Student,
             teachers:[],
+            sortOrder:'asc',
             searchParam:""
         }
     },
@@ -82,21 +81,33 @@ export default {
         });
         }
     },
+
+  computed: {
+    filteredTeachers() {
+      const query = this.searchParam.toLowerCase();
+      
+      let filteredTeachers = this.teachers.filter(teacher => {
+        const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+        return fullName.includes(query);
+      });
+
+      filteredTeachers.sort((a, b) => {
+        const nameA = a.firstName.toLowerCase();
+        const nameB = b.firstName.toLowerCase();
+        if (this.sortOrder === 'asc') {
+          return nameA.localeCompare(nameB);
+        } else {
+          return nameB.localeCompare(nameA);
+        }
+      });
+
+      return filteredTeachers;
+    },
+  },
     methods:{
-        search(){
-            UserService.searchTeachers(this.searchParam).then((response)=>{
-            this.teachers=response.data;
-        });
+        sortByTeachersName() {
+            this.sortOrder  === 'asc' ? 'desc' : 'asc';
         },
-
-        sortByTeachersFirstName(){
-            this.teachers=this.teachers.sort((a,b)=>{return a.firstName>b.firstName?1:-1});
-        },
-  
-        sortByTeachersLastName(){
-            this.teachers=this.teachers.sort((a,b)=>{return a.lastName>b.lastName?1:-1});
-        },
-
         teacherInfo(teacher){
             localStorage.setItem("teacher",JSON.stringify(teacher));
             this.$router.push('/teacherInfo');
