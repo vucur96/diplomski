@@ -2,32 +2,30 @@
     <div>
         <MenuComponent/>
         <h2>Update your information:</h2>
-        Username:<input type="text" v-model="username" required>
-        <br>
-        First name:<input type="text" v-model="firstName"  required>
-        <br>
-        Last name:<input type="text" v-model="lastName"  required>
-        <br>
-        Address:<input type="text" v-model="address"  required>
-        <br>
-        Phone:<input type="text" v-model="phone"  required>
-        <br>
-        Email:<input type="email" v-model="email"  required>
-        <br>
-        Image:<RouterLink to="/addNewImage">Change</RouterLink>
-        <div v-if='addNewSchool=="true"'>
-            New Schoole:
-            <select v-model="newSchool" required>
-                <option  value="SECONDERY_SCHOOL_GYMNASIUM">Secondery-gymnasium</option>
-                <option  value="SPECIALIZED_SECONDERY_SCHOOL">Specialized secondery school</option>
-                <option  value="SECONDARY_ART_SCHOOL">Secondary art school</option>
-            </select>
-        <br>
-        </div>
-        <br>
-        <button @click="incrementGrade">Next grade</button>
-        <br>
-        <button @click="update">Update</button>
+        <table>
+            <tbody>
+                <tr><td>Username:</td><td>{{username}}></td></tr>
+                <tr><td>First name:</td><td><input type="text" v-model="firstName"  required></td></tr>
+                <tr><td>Last name:</td><td><input type="text" v-model="lastName"  required></td></tr>
+                <tr><td>Address:</td><td><input type="text" v-model="address"  required></td></tr>
+                <tr><td>Phone:</td><td><input type="text" v-model="phone"  required></td></tr>
+                <tr><td>Email:</td><td><input type="email" v-model="email"  required></td></tr>
+                <tr><td>Image:</td><td><RouterLink to="/addNewImage">Change</RouterLink></td></tr>
+                <div v-if='addNewSchool=="true"'>
+                    <tr>
+                        <td>New Schoole:</td>
+                        <td><select v-model="newSchool" required>
+                            <option  value="SECONDERY_SCHOOL_GYMNASIUM">Secondery-gymnasium</option>
+                            <option  value="SPECIALIZED_SECONDERY_SCHOOL">Specialized secondery school</option>
+                            <option  value="SECONDARY_ART_SCHOOL">Secondary art school</option>
+                        </select>
+                        </td>
+                    </tr>
+                </div>
+                <tr><button @click="incrementGrade">Next grade</button></tr> 
+                <tr><button @click="update">Update</button></tr>
+            </tbody>
+        </table>
         {{message}}
     </div>
 </template>
@@ -57,7 +55,9 @@ export default{
     methods:{
        
         update(){
-
+            UserService.updateStudent(this.username,this.firstName,this.lastName,this.address,this.phone,this.email).then((response)=>{
+                    this.student=response.data;
+                });
         },
 
         incrementGrade(){

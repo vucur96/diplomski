@@ -52,6 +52,17 @@ class UserService{
         return axios.post(BACKEND_URL+'/teacher/v1/update',data);  
     }
     
+    updateStudent(username,firstName,lastName,address,phone,email){
+      let data=new FormData();
+      data.append("username",username);
+      data.append("firstName",firstName);
+      data.append("lastName",lastName);
+      data.append("address",address);
+      data.append("email",email);
+      data.append("phone",phone);
+     
+      return axios.post(BACKEND_URL+'/student/v1/updateStudent', data);
+    }
     
       rejectRequest(id) {
         const data={
@@ -129,25 +140,6 @@ class UserService{
         return axios.post(BACKEND_URL+'/teacher/v1/changePassword',data);
     
       }
-    
-      sortBy(/*firstname,lastname,subject,asc*/){
-        this.getTeachers().subscribe((teachers)=>{
-          teachers=teachers.sort();
-          return teachers
-        });
-      }
-    
-      sortByName() {
-        return axios.get(BACKEND_URL+'/teacher/v1/sortTeachersByName');
-      }
-    
-      searchTeachers(searchParam) {
-        const data={
-          searchParam:searchParam
-        }
-        return axios.post(BACKEND_URL+'/teacher/v1/searchTeachers',data);
-      }
-    
       getTeachers() {
         return axios.get(BACKEND_URL+'/teacher/v1/getTeachers');
       }
