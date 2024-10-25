@@ -78,23 +78,9 @@ export default{
       if (query)
         filteredSubjects = this.subjects
           .map(subject => {
-            const subjectMatches = subject.name.toLowerCase().includes(query);
+            return subject.name.toLowerCase().includes(query);
 
-            const filteredTeachers = subject.teachers.filter(teacher => {
-              const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-              return fullName.includes(query);
-            });
-
-            if (subjectMatches || filteredTeachers.length > 0) {
-              return {
-                ...subject,
-                teachers: subjectMatches ? subject.teachers : filteredTeachers, 
-              };
-            }
-
-            return null;
           })
-          .filter(subject => subject !== null && subject.teachers.length > 0);
       }
   },
   components:{
