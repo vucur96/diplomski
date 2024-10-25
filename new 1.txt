@@ -40,33 +40,7 @@ export default{
     },
     computed: {
       filteredSubjects() {
-        const query = this.searchParam.toLowerCase().trim();
-
-        let filteredSubjects = this.subjects;
-
-        if (query) {
-          filteredSubjects = this.subjects
-            .map(subject => {
-              const subjectMatches = subject.name.toLowerCase().includes(query);
-
-
-              const filteredTeachers = subject.teachers.filter(teacher => {
-                const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-                return fullName.includes(query);
-              });
-
-
-              if (subjectMatches || filteredTeachers.length > 0) {
-                return {
-                  ...subject,
-                  teachers: filteredTeachers,
-                };
-              }
-
-              return null;
-            })
-            .filter(subject => subject !== null && subject.teachers.length > 0);
-        }
+       let filteredSubjects=this.subjects;
 
         filteredSubjects = filteredSubjects.map(subject => {
           return {
@@ -80,8 +54,6 @@ export default{
             }),
           };
         });
-
-
         filteredSubjects.sort((a, b) => {
           const compareA = a.name.toLowerCase();
           const compareB = b.name.toLowerCase();
@@ -91,7 +63,7 @@ export default{
         });
 
         return filteredSubjects;
-      }
+    }
   },
   methods: {
     sortBySubjectName() {
@@ -222,5 +194,3 @@ input[type='text'] {
   background-color: #45a049;
 }
 </style>
-
-

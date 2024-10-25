@@ -1,4 +1,5 @@
 <template>
+    <MenuComponent/>
         <form>
             <div class="form-group row">
             <h2>Login</h2>
@@ -73,7 +74,10 @@
                 }   
             }
         }
-        }
+        },
+  components:{
+      MenuComponent
+  }
     }
     </script>
     
