@@ -1,8 +1,8 @@
 <template>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">    
     <RouterLink v-if='logedIn=="true"' class="link"  to='/changepass'>Password change </RouterLink> 
-    <RouterLink class="link"  to='/updateStudent' v-if="type=='student'"> Update info </RouterLink> 
-    <RouterLink  class="link" to='/updateTeacher' v-if="type=='teacher'"> Update info </RouterLink> 
+    <RouterLink class="link"  to='/updateStudent' v-if="type=='student'"> Profil </RouterLink> 
+    <RouterLink  class="link" to='/updateTeacher' v-if="type=='teacher'"> Profil</RouterLink> 
     <RouterLink class="link" v-if='type=="student"' to='/teachers'> Teachers </RouterLink> 
     <RouterLink v-if='logedIn=="true"' class="link"  to='/archive'>History </RouterLink>
     <RouterLink class="link" v-if='type=="teacher"' to='/lessonRequests'>Lesson requests </RouterLink>

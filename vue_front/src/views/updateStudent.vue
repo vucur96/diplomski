@@ -4,13 +4,15 @@
         <h2>Update your information:</h2>
         <table>
             <tbody>
-                <tr><td>Username:</td><td>{{username}}></td></tr>
+                <tr><td>Username:</td><td>{{username}}</td></tr>
                 <tr><td>First name:</td><td><input type="text" v-model="firstName"  required></td></tr>
                 <tr><td>Last name:</td><td><input type="text" v-model="lastName"  required></td></tr>
                 <tr><td>Address:</td><td><input type="text" v-model="address"  required></td></tr>
                 <tr><td>Phone:</td><td><input type="text" v-model="phone"  required></td></tr>
-                <tr><td>Email:</td><td><input type="email" v-model="email"  required></td></tr>
+                <tr><td>Email:</td><td><input type="text" v-model="email"  required></td></tr>
                 <tr><td>Image:</td><td><RouterLink to="/addNewImage">Change</RouterLink></td></tr>
+                <tr><td>School:</td><td>{{school}}</td></tr>
+                <tr><td>Grade:</td><td>{{grade}}</td></tr>
                 <div v-if='addNewSchool=="true"'>
                     <tr>
                         <td>New Schoole:</td>
@@ -22,8 +24,8 @@
                         </td>
                     </tr>
                 </div>
-                <tr><button @click="incrementGrade">Next grade</button></tr> 
-                <tr><button @click="update">Update</button></tr>
+                <tr ><td colspan="2" class="text-center"><button @click="incrementGrade">Next grade</button></td></tr> 
+                <tr><td colspan="2" class="text-center"><button @click="update">Update</button></td></tr>
             </tbody>
         </table>
         {{message}}

@@ -38,7 +38,7 @@ const router = createRouter({
     {
       path: '/student',
       name: 'student',
-      component:ProfilComponent
+      component:UpdateStudentComponent
     },
     {
       path: '/teacher',
