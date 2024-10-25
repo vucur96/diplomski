@@ -40,33 +40,7 @@ export default{
     },
     computed: {
       filteredSubjects() {
-        const query = this.searchParam.toLowerCase();
-        let filteredSubjects
-
-        if (!query) {
-           filteredSubjects=this.subjects;
-        }else{
-
-          filteredSubjects = this.subjects
-            .map(subject => {
-              const subjectMatches = subject.name.toLowerCase().includes(query);
-
-              const filteredTeachers = subject.teachers.filter(teacher => {
-                const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
-                return fullName.includes(query);
-              });
-
-              if (subjectMatches || filteredTeachers.length > 0) {
-                return {
-                  ...subject,
-                  teachers: subjectMatches ? subject.teachers : filteredTeachers, 
-                };
-              }
-
-              return null;
-            })
-            .filter(subject => subject !== null && subject.teachers.length > 0);
-        }
+       
 
         filteredSubjects = filteredSubjects.map(subject => {
           return {
@@ -98,6 +72,30 @@ export default{
     sortByTeacherName() {
       this.sortOrder.teacher = this.sortOrder.teacher === 'asc' ? 'desc' : 'asc';
     },
+    search(){
+      const query = this.searchParam.toLowerCase();
+
+      if (query)
+        filteredSubjects = this.subjects
+          .map(subject => {
+            const subjectMatches = subject.name.toLowerCase().includes(query);
+
+            const filteredTeachers = subject.teachers.filter(teacher => {
+              const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
+              return fullName.includes(query);
+            });
+
+            if (subjectMatches || filteredTeachers.length > 0) {
+              return {
+                ...subject,
+                teachers: subjectMatches ? subject.teachers : filteredTeachers, 
+              };
+            }
+
+            return null;
+          })
+          .filter(subject => subject !== null && subject.teachers.length > 0);
+      }
   },
   components:{
       MenuComponent
@@ -124,12 +122,13 @@ export default{
         <div>
           <h2>Our Teachers</h2>
 
-          <form @submit.prevent>
+          <form>
             <input
               type="text"
               placeholder="Search ..."
               v-model="searchParam"
             />
+            <button @click="search">Search</button>
           </form>
 
           <table>
