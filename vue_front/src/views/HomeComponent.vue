@@ -150,7 +150,7 @@ export default{
             </tbody>
           </table>
 
-          <p v-if="filteredSubjects.length === 0">
+          <p v-if="subjects.length === 0">
             We don't have any subjects yet!
           </p>
         </div>
