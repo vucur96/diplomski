@@ -40,7 +40,7 @@ export default{
     },
     computed: {
       filteredSubjects() {
-       
+       let filteredSubjects=this.subjects;
 
         filteredSubjects = filteredSubjects.map(subject => {
           return {
@@ -120,7 +120,7 @@ export default{
         <hr>
 
         <div>
-          <h2>Our Teachers</h2>
+          <h2>Our Subjects</h2>
 
           <form>
             <input
@@ -134,8 +134,8 @@ export default{
           <table>
             <thead>
               <tr>
-                <th @click="sortBySubjectName">Subject Name</th>
-                <th @click="sortByTeacherName">Teacher Name</th>
+                <th @click="sortBySubjectName"> Name</th>
+                <th @click="sortByTeacherName">Teacher's</th>
               </tr>
             </thead>
             <tbody>
