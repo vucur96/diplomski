@@ -31,6 +31,7 @@
     import UserService from '../services/UserService'
     import Student from '../models/student'
     import router from '../router'
+    import MenuComponent from './menu.vue'
     
     export default {
         name:'LoginComponent',
