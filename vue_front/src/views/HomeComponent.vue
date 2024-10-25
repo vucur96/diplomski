@@ -139,7 +139,7 @@ export default{
               </tr>
             </thead>
             <tbody>
-              <tr v-for="s in sortedFilteredSubjects" :key="s.name">
+              <tr v-for="s in filteredSubjects" :key="s.name">
                 <td>{{ s.name }}</td>
                 <td>
                   <div v-for="t in s.teachers" :key="t.id">
