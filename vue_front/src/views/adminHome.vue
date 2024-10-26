@@ -39,9 +39,18 @@
 </template>
 
 <script>
+import UserService from '../services/UserService.js';
+
 export default {
     data() {
-        return {requests:[]}
+        return {
+            requests:[]
+        }
+    },
+    created(){
+        UserService.getTeachersRequests().then((response)=>{
+        this.requests=response.data
+      });
     },
     methods:{
         accept(id){

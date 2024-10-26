@@ -35,7 +35,6 @@ public class ApplicationURL {
     public static final String TEACHER_LOGIN = V1+"/teacherLogin";
     public static final String GET_TEACHER_BY_ID = V1+"/getTeacherById";
     public static final String GET_ACTIVE_TEACHERS_COUNT = V1+"/getActiveTeachersCount";
-    public static final String GET_ALL_REGISTER_REQUESTS = V1+"/getAllRegisterRequests";
     public static final String GET_ALL_PENDING_REQUESTS = V1+"/getAllPendingRequests";
     public static final String ACCEPT_REQUEST = V1+"/acceptRequest";
     public static final String REJECT_REQUEST = V1+"/rejectRequest";

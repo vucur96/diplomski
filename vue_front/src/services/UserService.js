@@ -145,6 +145,11 @@ class UserService{
       getTeachers() {
         return axios.get(BACKEND_URL+'/teacher/v1/getTeachers');
       }
+
+      
+      getTeachersRequests() {
+        return axios.get(BACKEND_URL+'/teacher/v1/getAllPendingRequests');
+      }
     
     
       registerStudent(username,password,firstName,lastName,address,phone,email,img,grade,school){
