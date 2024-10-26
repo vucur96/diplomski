@@ -19,7 +19,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="s in filteredTeachers" :key="s.name">
+            <tr v-for="t in filteredTeachers" :key="t.username">
                 <td v-if="type!='student'">{{t.firstName}} {{t.lastName}}</td>
                 <td v-if="type=='student'"><button @click="teacherInfo(t)">{{t.firstName}} {{t.lastName}}</button></td>
                 <td>
