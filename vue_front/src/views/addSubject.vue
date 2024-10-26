@@ -1,13 +1,18 @@
 <template>
     <div>
         <MenuComponent/>
-        Add subject:
+        <h2>Add subject:</h2>
         <hr>
-        Name: <input type="text" v-model="name">
+        <table>
+            <tbody>
+                <td>Name: </td>
+                <td><input type="text" v-model="name"></td>
+            </tbody>
+        </table>
         <br>
         <button @click="add()">Add</button>
         <hr>
-        Subjects to approve:
+        <h2>Subjects to approve:</h2>
         <br>
         <table v-if="subjectRequests.length>0">
             <tr>
@@ -41,20 +46,20 @@ export default{
     },
     methods:{
         add(){
-            SubjectService.addSubject(this.name,"APPROVED","").then(subject=>{
-                alert(subject.id);
+            SubjectService.addSubject(this.name,"APPROVED","").then((response)=>{
+                alert(response.id);
             });
         },
 
         approve(name){
-            SubjectService.approveSubject(name).then(subject=>{
-                alert(subject.id);
+            SubjectService.approveSubject(name).then((response)=>{
+                alert(response.id);
             });
         },
 
         delete(name){
-            SubjectService.deleteSubject(name).then(subject=>{
-                alert(subject.id);
+            SubjectService.deleteSubject(name).then((response)=>{
+                alert(response.id);
             });
         }
     },

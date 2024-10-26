@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SubjectRepo extends JpaRepository<Subject, Long> {
-  @Override
-  Optional<Subject> findById(Long aLong);
+
 
   Optional<Subject> findByName(String name);
 
