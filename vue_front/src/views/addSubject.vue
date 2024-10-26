@@ -31,7 +31,7 @@ export default{
     name:'AddSubjectComponent',
     data(){
         return{
-            name:string,
+            name:string="",
             subjectRequests:[]
         }
     },

@@ -37,7 +37,7 @@ export default {
         }
     },
     created(){
-        UserService.getSudents().then((response)=>{
+        UserService.getStudents().then((response)=>{
       this.students=response.data;
     })},
     components:{
