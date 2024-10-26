@@ -19,6 +19,7 @@
                 <th>Photo</th>
                 <th>Created</th>
                 <th>Changed</th>
+                <th>Action</th>
             </tr>
             <tr v-for='r in requests' :key="r.id">
             <td>{{r.teacher.firstName}}</td>
@@ -54,14 +55,14 @@ export default {
     },
     methods:{
         accept(id){
-            this.service.acceptRequest(id).subscribe(()=>{
-                this.router.navigate(['adminHome']);
+            UserService.acceptRequest(id).then(()=>{
+                window.location.reload();
             });
         },
 
         reject(id){
-            this.service.rejectRequest(id).subscribe(()=>{
-                this.router.navigate(['adminHome']);
+            UserService.rejectRequest(id).then(()=>{
+                window.location.reload();
             });
         }
     }
