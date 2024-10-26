@@ -258,8 +258,8 @@ public class AppUserService {
             String firstName,
             String lastName,
             String address,
-            String phone,
-            String email)
+            String email,
+            String phone)
             throws UserNotFoundException {
 
         Student temp = appUserRepo.findStudentByUsername(username);

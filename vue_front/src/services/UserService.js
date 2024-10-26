@@ -41,25 +41,27 @@ class UserService{
       }
     
       updateTeacher(currentTeacher) {
-        let data=new FormData();
-        data.append("id",currentTeacher.id.toString());
-        data.append("firstName",currentTeacher.firstName);
-        data.append("lastName",currentTeacher.lastName);
-        data.append("username",currentTeacher.username);
-        data.append("address",currentTeacher.address);
-        data.append("phone",currentTeacher.phone);
-        data.append("email",currentTeacher.email);
+        const data={
+        id:currentTeacher.id.toString(),
+        firstName:currentTeacher.firstName,
+        lastName:currentTeacher.lastName,
+        username:currentTeacher.username,
+        address:currentTeacher.address,
+        phone:currentTeacher.phone,
+        email:currentTeacher.email,
+        };
         return axios.post(BACKEND_URL+'/teacher/v1/update',data);  
     }
     
     updateStudent(username,firstName,lastName,address,phone,email){
-      let data=new FormData();
-      data.append("username",username);
-      data.append("firstName",firstName);
-      data.append("lastName",lastName);
-      data.append("address",address);
-      data.append("email",email);
-      data.append("phone",phone);
+     const data={
+      username:username,
+      firstName:firstName,
+      lastName:lastName,
+      address:address,
+      email:email,
+      phone:phone
+     }
      
       return axios.post(BACKEND_URL+'/student/v1/updateStudent', data);
     }
