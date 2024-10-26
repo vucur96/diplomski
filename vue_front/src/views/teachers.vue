@@ -85,8 +85,9 @@ export default {
   computed: {
     filteredTeachers() {
       const query = this.searchParam.toLowerCase();
-      
-      let filteredTeachers = this.teachers.filter(teacher => {
+      let filteredTeachers;
+      if(query){
+        filteredTeachers = this.teachers.filter(teacher => {
         const fullName = `${teacher.firstName} ${teacher.lastName}`.toLowerCase();
         return fullName.includes(query);
       });
@@ -100,7 +101,9 @@ export default {
           return nameB.localeCompare(nameA);
         }
       });
-
+      return filteredTeachers;
+    }
+        filteredTeachers=this.teachers
       return filteredTeachers;
     },
   },

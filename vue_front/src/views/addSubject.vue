@@ -27,35 +27,37 @@
 </template>
 
 <script>
+import SubjectService from '../services/SubjectService.js'
+
 export default{
     name:'AddSubjectComponent',
     data(){
         return{
-            name:string="",
+            name:"",
             subjectRequests:[]
         }
     },
     methods:{
         add(){
-            this.subjectService.addSubject(this.name,"APPROVED","").subscribe(subject=>{
+            SubjectService.addSubject(this.name,"APPROVED","").then(subject=>{
                 alert(subject.id);
             });
         },
 
         approve(name){
-            this.subjectService.approveSubject(name).subscribe(subject=>{
+            SubjectService.approveSubject(name).then(subject=>{
                 alert(subject.id);
             });
         },
 
         delete(name){
-            this.subjectService.deleteSubject(name).subscribe(subject=>{
+            SubjectService.deleteSubject(name).then(subject=>{
                 alert(subject.id);
             });
         }
     },
     created(){
-        this.subjectService.getAllSubjectRequests().subscribe((subjectRequests)=>{
+        SubjectService.getAllSubjectRequests().then((subjectRequests)=>{
             this.subjectRequests=subjectRequests;
         })
     }
