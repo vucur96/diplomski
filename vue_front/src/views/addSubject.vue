@@ -5,12 +5,16 @@
         <hr>
         <table>
             <tbody>
-                <td>Name: </td>
-                <td><input type="text" v-model="name"></td>
+                <tr>
+                    <td>Name: </td>
+                    <td><input type="text" v-model="name"></td>
+                </tr>
+                <tr>        
+                    <td colspan="2"><button class="btn btn-secondary" @click="add()">Add</button></td>
+                </tr>
             </tbody>
         </table>
-        <br>
-        <button @click="add()">Add</button>
+
         <hr>
         <h2>Subjects to approve:</h2>
         <br>
@@ -22,8 +26,8 @@
             <tr v-for='s in subjectRequests' :key="s.name">
                 <td>{{s.name}}</td>
                 <td>{{s.description}}</td>
-                <td><button @click="approve(s.name)">Approve</button></td>
-                <td><button @click="delete(s.name)">Delete</button></td>
+                <td><button class="btn btn-secondary" @click="approve(s.name)">Approve</button></td>
+                <td><button class="btn btn-secondary" @click="delete(s.name)">Delete</button></td>
             </tr>
         </table>
         <div v-if="subjectRequests.length==0">
