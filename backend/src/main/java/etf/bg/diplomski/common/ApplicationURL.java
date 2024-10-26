@@ -23,6 +23,7 @@ public class ApplicationURL {
     public static final String GET_STUDENTS = V1+"/getStudents";
     public static final String GET_STUDENT_COUNT = V1+"/getStudentCount";
     public static final String UPDATE_IMAGE = V1+"/updateImage";
+    public static final String UPDATE_STUDENT_INFO = V1+"/updateStudent";
     public static final String GET_STUDENT_BY_ID = V1+"/getStudentById";
     public static final String CHANGE_PASSWORD = V1+"/changePassword";
     public static final String UPDATE_GRADE = V1+"/updateGrade";

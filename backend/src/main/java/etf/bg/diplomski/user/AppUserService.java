@@ -253,6 +253,24 @@ public class AppUserService {
         teacher.setEmail(email);
         appUserRepo.save(teacher);
     }
+    public Student updateStudent(
+            String username,
+            String firstName,
+            String lastName,
+            String address,
+            String phone,
+            String email)
+            throws UserNotFoundException {
+
+        Student temp = appUserRepo.findStudentByUsername(username);
+        temp.setFirstName(firstName);
+        temp.setLastName(lastName);
+        temp.setAddress(address);
+        temp.setPhone(phone);
+        temp.setEmail(email);
+        return appUserRepo.save(temp);
+
+    }
 
     public double getAverageScoreForTeacher(Long id) {
         return appUserRepo.getAverageScoreForTeacher(id);

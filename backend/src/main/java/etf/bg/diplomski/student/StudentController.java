@@ -104,4 +104,13 @@ public class StudentController {
                     data.studentId(), data.addNewSchool(), data.newSchool(),data.grade()),
             HttpStatus.OK);
   }
+
+  @Operation(description = "Changing the students information.")
+  @PostMapping(UPDATE_STUDENT_INFO)
+  public ResponseEntity<Student> updateStudent(@RequestBody UpdateStudentDTO data) {
+    return new ResponseEntity<>(
+            appUserService.updateStudent(
+                    data.username(), data.firstName(), data.lastName(),data.address(), data.phone(), data.email()),
+            HttpStatus.OK);
+  }
 }
