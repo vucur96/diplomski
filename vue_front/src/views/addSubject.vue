@@ -1,5 +1,6 @@
 <template>
     <div>
+        <MenuComponent/>
         Add subject:
         <hr>
         Name: <input type="text" v-model="name">
@@ -28,6 +29,7 @@
 
 <script>
 import SubjectService from '../services/SubjectService.js'
+import MenuComponent from '../views/menu.vue'
 
 export default{
     name:'AddSubjectComponent',
@@ -60,6 +62,9 @@ export default{
         SubjectService.getAllSubjectRequests().then((subjectRequests)=>{
             this.subjectRequests=subjectRequests;
         })
+    },
+    components:{
+        MenuComponent
     }
 }
 </script>
