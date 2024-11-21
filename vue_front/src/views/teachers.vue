@@ -16,6 +16,7 @@
             <th>Subjects</th>
             <th>Greads</th>
             <th>Photo</th>
+            <th v-if="type=='admin'" calspan="2">Action</th>  
             </tr>
         </thead>
         <tbody>
@@ -27,8 +28,8 @@
                 </td>
                 <td>{{t.grade}}</td>
                 <td><img v-bind:src=t.imgURL width="50" height="50" alt="Image not found"></td>
-                <td v-if="type=='admin'"><button @click="updateTeacher(t.id)">Update info</button></td> 
-                <td v-if="type=='admin'"><button @click="deactivateTeacher(t.id)">Deactivate</button></td>
+                <td v-if="type=='admin'"><button class="btn btn-secondary" @click="updateTeacher(t.id)">Update info</button></td> 
+                <td v-if="type=='admin'"><button class="btn btn-secondary" @click="deactivateTeacher(t.id)">Deactivate</button></td>
             </tr>
         </tbody>
     </table>
