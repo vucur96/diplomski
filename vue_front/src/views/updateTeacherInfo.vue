@@ -54,12 +54,12 @@ name:'UpdateTeacherInfoComponent',
     created(){
         UserService.getTeacherById(localStorage.getItem("teacher")).then((response)=>{
             this.teacher=response.data;
-            this.username=this.student.username;
-            this.firstName=this.student.firstName;
-            this.lastName=this.student.lastName;
-            this.address=this.student.address;
-            this.phone=this.student.phone;
-            this.email=this.student.email;
+            this.username=this.teacher.username;
+            this.firstName=this.teacher.firstName;
+            this.lastName=this.teacher.lastName;
+            this.address=this.teacher.address;
+            this.phone=this.teacher.phone;
+            this.email=this.teacher.email;
         })
     },
     components:{
