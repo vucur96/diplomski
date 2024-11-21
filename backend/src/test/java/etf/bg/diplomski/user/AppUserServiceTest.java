@@ -47,21 +47,21 @@ public class AppUserServiceTest {
     @Test
     public void SuccessfulRegistrationOfNewStudent() throws IOException {
 
-//        Student student = new Student("petar", "petrovic", "petar", "petrovic",
-//                "address", "0635475635", "petar@gmail.com","",UserStatus.ACTIVE, SchoolType.ELEMENTARY,5);
-//        RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
-//                "address", "0635475635", "petar@gmail.com",  new MockMultipartFile("test.svg.png",new byte[0]), SchoolType.ELEMENTARY,5);
-//
-//        ;
-//        when(encoder.encode(any(CharSequence.class))).thenReturn("$2a$10$5Yo8gvy6uvtFS2A8ETWo3egmMd5KHqsqD3JEyLJsj1UwZ0pqzdTGi");
-//        when(appUserRepo.save(any(Student.class))).thenReturn(new Student());
-//        appUserService.addStudent(studentDTO);
-//
-//        ArgumentCaptor<Student> studentArgCaptor=ArgumentCaptor.forClass(Student.class);
-//        verify(appUserRepo).save(studentArgCaptor.capture());
-//        Student captorStudent=studentArgCaptor.getValue();
-//
-//        Assertions.assertThat(captorStudent).isEqualTo(student);
+        Student student = new Student("petar", "petrovic", "petar", "petrovic",
+                "address", "0635475635", "petar@gmail.com","",UserStatus.ACTIVE, SchoolType.ELEMENTARY,5);
+        RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
+                "address", "0635475635", "petar@gmail.com",  new MockMultipartFile("test.svg.png",new byte[0]), SchoolType.ELEMENTARY,5);
+
+        ;
+        when(encoder.encode(any(CharSequence.class))).thenReturn("$2a$10$5Yo8gvy6uvtFS2A8ETWo3egmMd5KHqsqD3JEyLJsj1UwZ0pqzdTGi");
+        when(appUserRepo.save(any(Student.class))).thenReturn(new Student());
+        appUserService.addStudent(studentDTO);
+
+        ArgumentCaptor<Student> studentArgCaptor=ArgumentCaptor.forClass(Student.class);
+        verify(appUserRepo).save(studentArgCaptor.capture());
+        Student captorStudent=studentArgCaptor.getValue();
+
+        Assertions.assertThat(captorStudent).isEqualTo(student);
     }
 
 
