@@ -44,5 +44,6 @@ dependencies {implementation 'org.springframework.boot:spring-boot-starter-data-
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.14'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.h2database:h2'
 }
 
