@@ -16,7 +16,7 @@
             <th>Subjects</th>
             <th>Greads</th>
             <th>Photo</th>
-            <th v-if="type=='admin'" calspan="2">Action</th>  
+            <th v-if="type=='admin'" colspan="2">Action</th>  
             </tr>
         </thead>
         <tbody>
