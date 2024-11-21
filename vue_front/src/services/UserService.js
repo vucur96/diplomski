@@ -40,16 +40,15 @@ class UserService{
         return axios.post(BACKEND_URL+'/teacher/v1/updateImage',data);  
       }
     
-      updateTeacher(currentTeacher) {
+      updateTeacher(username,firstName,lastName,address,phone,email) {
         const data={
-        id:currentTeacher.id.toString(),
-        firstName:currentTeacher.firstName,
-        lastName:currentTeacher.lastName,
-        username:currentTeacher.username,
-        address:currentTeacher.address,
-        phone:currentTeacher.phone,
-        email:currentTeacher.email,
-        };
+          username:username,
+          firstName:firstName,
+          lastName:lastName,
+          address:address,
+          email:email,
+          phone:phone
+         }
         return axios.post(BACKEND_URL+'/teacher/v1/update',data);  
     }
     

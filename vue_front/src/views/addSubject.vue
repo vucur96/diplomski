@@ -10,7 +10,7 @@
                     <td><input type="text" v-model="name"></td>
                 </tr>
                 <tr>        
-                    <td colspan="2"><button class="btn btn-secondary" @click="add()">Add</button></td>
+                    <td colspan="2"  class="text-center"><button class="btn btn-secondary" @click="add()">Add</button></td>
                 </tr>
             </tbody>
         </table>

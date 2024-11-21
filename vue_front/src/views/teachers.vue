@@ -27,6 +27,8 @@
                 </td>
                 <td>{{t.grade}}</td>
                 <td><img v-bind:src=t.imgURL width="50" height="50" alt="Image not found"></td>
+                <td v-if="type=='admin'"><button @click="updateTeacher(t.id)">Update info</button></td> 
+                <td v-if="type=='admin'"><button @click="deactivateTeacher(t.id)">Deactivate</button></td>
             </tr>
         </tbody>
     </table>
@@ -114,6 +116,15 @@ export default {
         teacherInfo(teacher){
             localStorage.setItem("teacher",JSON.stringify(teacher));
             this.$router.push('/teacherInfo');
+        },
+        updateTeacher(id){
+            localStorage.setItem("teacher",JSON.stringify(id));
+            this.$router.push('/updateTeacherInfo');
+        },
+        deactivateTeacher(username){
+            UserService.deactivateTeacher(username).then((response)=>{
+                this.$router.push('/teachers');
+            })
         }
 
     },

@@ -24,8 +24,8 @@
                         </td>
                     </tr>
                 </div>
-                <tr ><td colspan="2" class="text-center"><button @click="incrementGrade">Next grade</button></td></tr> 
-                <tr><td colspan="2" class="text-center"><button @click="update">Update</button></td></tr>
+                <tr ><td colspan="2" class="text-center"><button class="btn btn-secondary" @click="incrementGrade">Next grade</button></td></tr> 
+                <tr><td colspan="2" class="text-center"><button class="btn btn-secondary" @click="update">Update</button></td></tr>
             </tbody>
         </table>
         {{message}}

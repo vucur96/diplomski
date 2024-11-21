@@ -68,6 +68,14 @@ input[type='text'] {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+input[type='password'] {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
 .btn-secondary {
   background-color: #4CAF50;

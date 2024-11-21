@@ -16,6 +16,7 @@ import AdminLoginComponent from '@/views/adminLogin.vue'
 import AdminHomeComponent from '@/views/adminHome.vue'
 import AddNewImageComponent from '@/views/addNewImage.vue'
 import HistoryComponent from '@/views/history.vue'
+import updateTeacherInfo from '@/views/updateTeacherInfo.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -114,6 +115,11 @@ const router = createRouter({
       path:'/studentDetails',
       name:'studentDetails',
       component:StudentDetailsComponent
+    },
+    {
+      path:'/updateTeacherInfo',
+      name:'/updateTeacherInfo',
+      component:updateTeacherInfo
     }
   ]
 })
