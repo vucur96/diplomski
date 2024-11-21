@@ -55,7 +55,7 @@ public class AppUserServiceTest {
         MockMultipartFile file = new MockMultipartFile("test.png", "test.png", "image/png", new byte[0]);
         RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
                 "address", "0635475635", "petar@gmail.com",  file, SchoolType.ELEMENTARY,5);
-        
+
 
         when(appUserRepo.save(any(Student.class))).thenReturn(new Student());
         appUserService.addStudent(studentDTO);
