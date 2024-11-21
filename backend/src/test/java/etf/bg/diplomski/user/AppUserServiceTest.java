@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,11 +50,13 @@ public class AppUserServiceTest {
 
         Student student = new Student("petar", "petrovic", "petar", "petrovic",
                 "address", "0635475635", "petar@gmail.com","",UserStatus.ACTIVE, SchoolType.ELEMENTARY,5);
-        RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
-                "address", "0635475635", "petar@gmail.com",  new MockMultipartFile("test.svg.png",new byte[0]), SchoolType.ELEMENTARY,5);
 
-        ;
-        when(encoder.encode(any(CharSequence.class))).thenReturn("$2a$10$5Yo8gvy6uvtFS2A8ETWo3egmMd5KHqsqD3JEyLJsj1UwZ0pqzdTGi");
+
+        MockMultipartFile file = new MockMultipartFile("test.png", "test.png", "image/png", new byte[0]);
+        RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
+                "address", "0635475635", "petar@gmail.com",  file, SchoolType.ELEMENTARY,5);
+        
+
         when(appUserRepo.save(any(Student.class))).thenReturn(new Student());
         appUserService.addStudent(studentDTO);
 

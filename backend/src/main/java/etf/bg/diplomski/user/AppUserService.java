@@ -48,9 +48,9 @@ public class AppUserService {
     private SubjectRepo subjectRepo;
 
     private final String IMAGE_FOLDER_PATH =
-            System.getProperty("user.home") + "/Desktop/UnitedCloud/praksa/diplomski/front/src/assets/Images/";
+            System.getProperty("user.home") + "/Desktop/diplomski/vue_front/src/assets/Images/";
     private final String CV_FOLDER_PATH =
-            System.getProperty("user.home") + "/Desktop/UnitedCloud/praksa/frontend/src/assets/CV/";
+            System.getProperty("user.home") + "/Desktop/diplomski/vue_front/src/assets/CV/";
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
