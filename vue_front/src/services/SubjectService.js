@@ -52,6 +52,10 @@ class SubjectService{
         return axios.post(BACKEND_URL+'/subject/v1/deleteSubject',data);
       
       }
+
+      GetTeachersPerSubject(){
+        return axios.get(BACKEND_URL+'/subject/teacherPerSubjectCounts')
+      }
     
     
 }

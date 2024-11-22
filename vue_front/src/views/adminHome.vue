@@ -46,6 +46,7 @@
 
 <script>
 import UserService from '../services/UserService.js';
+import SubjectService from '../services/SubjectService.js';
 
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
@@ -55,25 +56,29 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
     data() {
         return {
-            requests:[],
-            chartData: {
-                labels: ['Matematika', 'Fizika', 'Hemija', 'Biologija', 'Istorija'], // Subjects
+            requests:[],   chartData: {
+                labels: [],  
                 datasets: [
-                {
-                    label: 'Broj nastavnika', // Teacher count label
-                    data: [5, 3, 4, 2, 6], // Teacher counts for each subject (static data)
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Bar color
-                    borderColor: 'rgba(54, 162, 235, 1)', // Border color
-                    borderWidth: 1
-                }
+                    {
+                        label: 'Broj nastavnika',
+                        data: [],  
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
                 ]
             }
-        }
+        };
     },
     created(){
         UserService.getTeachersRequests().then((response)=>{
-        this.requests=response.data
-      });
+            this.requests=response.data
+        });
+        SubjectService.GetTeachersPerSubject().then((response)=>{
+            const data = response.data;
+            this.chartData.labels = data.map(item => item.subjectName);
+            this.chartData.datasets[0].data = data.map(item => item.teacherCount);
+        })
     },
     methods:{
         accept(id){
