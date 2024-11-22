@@ -51,7 +51,7 @@ name:'UpdateTeacherComponent',
     created(){
         UserService.getTeacherById(localStorage.getItem("userId")).then((response)=>{
             this.teacher=response.data;
-            this.username=this.treacher.username;
+            this.username=this.teacher.username;
             this.password="";
             this.firstName=this.teacher.firstName;
             this.lastName=this.teacher.lastName;
