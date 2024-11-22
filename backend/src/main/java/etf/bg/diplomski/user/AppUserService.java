@@ -164,12 +164,12 @@ public class AppUserService {
                         student.address(),
                         student.phone(),
                         student.email(),
-                        "/Images" + student.images().getOriginalFilename(),
+                        "/assets/Images/" + student.images().getOriginalFilename(),
                         ACTIVE,
                         student.school(),
                         student.grade());
         Student createdUser = appUserRepo.save(user);
-       
+
         logger.info("sacuvan user " + createdUser.getId());
         return createdUser.getId();
     }
