@@ -17,7 +17,7 @@
         <div class="form-group row">
             <lable>Repeat password:</lable>
             <div class="form-group col-md-6">
-                <input type="repeatPassword" class="form-control" v-model="repetedPassword"  required>
+                <input type="password" class="form-control" v-model="repetedPassword"  required>
             </div>
         </div>
         <div class="form-group row">

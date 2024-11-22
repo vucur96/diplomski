@@ -104,9 +104,9 @@ public class AppUserService {
                             teacher.address(),
                             teacher.phone(),
                             teacher.email(),
-                            "/assets/Images/" + teacher.images().getOriginalFilename(),
+                            "Images/" + teacher.images().getOriginalFilename(),
                             PENDING,
-                            "/assets/CV/" + teacher.cv().getOriginalFilename(),
+                            "CV/" + teacher.cv().getOriginalFilename(),
                             teacher.subjects(),
                             teacher.grades(),
                             teacher.wdyHearAboutUs());
@@ -147,7 +147,7 @@ public class AppUserService {
                         student.address(),
                         student.phone(),
                         student.email(),
-                        "../assets/Images" + student.images().getOriginalFilename(),
+                        "/Images" + student.images().getOriginalFilename(),
                         ACTIVE,
                         student.school(),
                         student.grade());
