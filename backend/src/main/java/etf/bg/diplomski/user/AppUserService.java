@@ -144,7 +144,10 @@ public class AppUserService {
             throw new IllegalArgumentException("Uploaded file has no name.");
         }
 
-        String resolvedPath = Paths.get("../vue_front/src/assets/Images/").toAbsolutePath().normalize().toString();
+        String resolvedPath = Paths.get(System.getProperty("user.dir"), "vue_front/public/assets/Images/")
+                .toAbsolutePath()
+                .normalize()
+                .toString();
 
         File targetDirectory = new File(resolvedPath);
         if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
