@@ -54,6 +54,8 @@ public class StudentController {
       return new ResponseEntity<>(appUserService.addStudent(newStudent), HttpStatus.OK);
     } catch (IOException e) {
       return new ResponseEntity<>("Image not saved!", HttpStatus.INTERNAL_SERVER_ERROR);
+    }catch (IllegalArgumentException ie){
+      return new ResponseEntity<>(ie.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

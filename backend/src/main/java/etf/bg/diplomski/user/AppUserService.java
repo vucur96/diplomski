@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +138,23 @@ public class AppUserService {
      * @return
      * @throws IOException
      */
-    public Long addStudent(RegStudentDTO student) throws IOException {
+    public Long addStudent(RegStudentDTO student) throws IOException,IllegalArgumentException {
+        String originalFilename = student.images().getOriginalFilename();
+        if (originalFilename == null || originalFilename.isEmpty()) {
+            throw new IllegalArgumentException("Uploaded file has no name.");
+        }
+
+        String resolvedPath = Paths.get("../vue_front/src/assets/Images/").toAbsolutePath().normalize().toString();
+
+        File targetDirectory = new File(resolvedPath);
+        if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
+            throw new IOException("Could not create target directory: " + resolvedPath);
+        }
+
+        File targetFile = new File(resolvedPath + File.separator + originalFilename);
+        student.images().transferTo(targetFile);
+
+
         Student user =
                 new Student(
                         student.username(),
@@ -152,9 +169,7 @@ public class AppUserService {
                         student.school(),
                         student.grade());
         Student createdUser = appUserRepo.save(user);
-        student
-                .images()
-                .transferTo(new File(IMAGE_FOLDER_PATH + student.images().getOriginalFilename()));
+       
         logger.info("sacuvan user " + createdUser.getId());
         return createdUser.getId();
     }
