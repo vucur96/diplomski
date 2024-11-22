@@ -10,6 +10,11 @@
                 <b-button class="btn btn-primary" @click="logout">Log out</b-button>
         </header>
 
+        <div>
+            <h2>Broj nastavnika po predmetima:</h2>
+            <BarChart :chart-data="chartData" />
+        </div>
+
         <table v-if='requests.length>0'>
             <tr>
                 <th>First name</th>
@@ -42,10 +47,27 @@
 <script>
 import UserService from '../services/UserService.js';
 
+import { Bar } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+
 export default {
     data() {
         return {
-            requests:[]
+            requests:[],
+            chartData: {
+                labels: ['Matematika', 'Fizika', 'Hemija', 'Biologija', 'Istorija'], // Nazivi predmeta
+                datasets: [
+                {
+                    label: 'Broj nastavnika',
+                    data: [5, 3, 4, 2, 6], // Broj nastavnika za svaki predmet
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Boja barova
+                    borderColor: 'rgba(54, 162, 235, 1)', // Boja ivice barova
+                    borderWidth: 1
+                }
+                ]
+            }
         }
     },
     created(){
@@ -65,6 +87,9 @@ export default {
                 window.location.reload();
             });
         }
+    },
+    components:{
+        BarChart: Bar
     }
 }
 </script>
