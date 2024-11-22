@@ -52,7 +52,7 @@
                 this.message="";
                 if(this.type=="Student"){
                     UserService.studentLogin(this.username,this.password).then((response)=>{
-                    if(response.data==null){
+                    if(response=="User not found!"){
                         this.message="User not found"
                     }else{
                         let user=response.data;
@@ -63,7 +63,7 @@
                     }
                 })}else{
                     UserService.teacherLogin(this.username,this.password).then((response)=>{
-                    if(response.data==null){
+                    if(response.data=="User not found!"){
                         this.message="User not found"
                     }else{
                         let user=response.data;
