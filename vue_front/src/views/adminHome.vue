@@ -57,13 +57,13 @@ export default {
         return {
             requests:[],
             chartData: {
-                labels: ['Matematika', 'Fizika', 'Hemija', 'Biologija', 'Istorija'], // Nazivi predmeta
+                labels: ['Matematika', 'Fizika', 'Hemija', 'Biologija', 'Istorija'], // Subjects
                 datasets: [
                 {
-                    label: 'Broj nastavnika',
-                    data: [5, 3, 4, 2, 6], // Broj nastavnika za svaki predmet
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Boja barova
-                    borderColor: 'rgba(54, 162, 235, 1)', // Boja ivice barova
+                    label: 'Broj nastavnika', // Teacher count label
+                    data: [5, 3, 4, 2, 6], // Teacher counts for each subject (static data)
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Bar color
+                    borderColor: 'rgba(54, 162, 235, 1)', // Border color
                     borderWidth: 1
                 }
                 ]
