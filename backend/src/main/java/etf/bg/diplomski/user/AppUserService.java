@@ -215,7 +215,8 @@ public class AppUserService {
     public StudentDTO studentLogin(String username, String password) throws UserNotFoundException {
         Student user = appUserRepo.findStudentByUsername(username);
         if(user!=null){
-            if (user.getPassword().equals(encoder.encode(password))) {
+
+            if (!encoder.matches(user.getPassword(),password)) {
                 throw new UserNotFoundException();
             }
             logger.info("User " + user.getUsername() + " has logged in!");
@@ -230,8 +231,7 @@ public class AppUserService {
 
         Optional<Teacher> user = appUserRepo.findTeacherByUsername(username);
         if (user.isPresent()) {
-            logger.info(user.get().getUsername());
-            if (user.get().getPassword().equals(encoder.encode(password))) {
+            if (!encoder.matches(user.get().getPassword(),password)) {
                 throw new UserNotFoundException();
             }
             return user.get();
