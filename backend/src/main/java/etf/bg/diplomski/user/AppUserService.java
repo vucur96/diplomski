@@ -139,23 +139,12 @@ public class AppUserService {
      * @throws IOException
      */
     public Long addStudent(RegStudentDTO student) throws IOException,IllegalArgumentException {
-        String originalFilename = student.images().getOriginalFilename();
-        if (originalFilename == null || originalFilename.isEmpty()) {
-            throw new IllegalArgumentException("Uploaded file has no name.");
-        }
 
-        String resolvedPath = Paths.get(System.getProperty("user.dir"), "vue_front/public/assets/Images/")
-                .toAbsolutePath()
-                .normalize()
-                .toString();
+        String basePath = System.getProperty("user.dir");
+        String imageFolderPath = Paths.get(basePath, "..", "vue_front", "public", "assets", "Images").toString();
 
-        File targetDirectory = new File(resolvedPath);
-        if (!targetDirectory.exists() && !targetDirectory.mkdirs()) {
-            throw new IOException("Could not create target directory: " + resolvedPath);
-        }
-
-        File targetFile = new File(resolvedPath + File.separator + originalFilename);
-        student.images().transferTo(targetFile);
+        student.images()
+                .transferTo(new File(imageFolderPath + "/" + student.images().getOriginalFilename()));
 
 
         Student user =
