@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td colspan='2'>
-                    <button @click='changePassword'>Change</button>
+                    <button class="btn btn-secondary" @click='changePassword'>Change</button>
                 </td>
             </tr>
         </table>

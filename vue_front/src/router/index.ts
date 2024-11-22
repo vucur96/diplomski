@@ -44,7 +44,7 @@ const router = createRouter({
     {
       path: '/teacher',
       name: 'teacher',
-      component:ProfilComponent
+      component:UpdateTeacherComponent
     },
     {
       path:'/changepass',

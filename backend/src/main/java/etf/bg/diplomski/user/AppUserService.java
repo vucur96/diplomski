@@ -214,11 +214,16 @@ public class AppUserService {
 
     public StudentDTO studentLogin(String username, String password) throws UserNotFoundException {
         Student user = appUserRepo.findStudentByUsername(username);
-        if (user.getPassword().equals(encoder.encode(password))) {
+        if(user!=null){
+            if (user.getPassword().equals(encoder.encode(password))) {
+                throw new UserNotFoundException();
+            }
+            logger.info("User " + user.getUsername() + " has logged in!");
+            return studentDTOMapper.apply(user);
+        }else{
             throw new UserNotFoundException();
         }
-        logger.info("User " + user.getUsername() + " has logged in!");
-        return studentDTOMapper.apply(user);
+
     }
 
     public Teacher teacherLogin(String username, String password) throws UserNotFoundException {
