@@ -216,7 +216,7 @@ public class AppUserService {
         Student user = appUserRepo.findStudentByUsername(username);
         if(user!=null){
 
-            if (!encoder.matches(user.getPassword(),password)) {
+            if (!encoder.matches(password,user.getPassword())) {
                 throw new UserNotFoundException();
             }
             logger.info("User " + user.getUsername() + " has logged in!");
@@ -231,7 +231,7 @@ public class AppUserService {
 
         Optional<Teacher> user = appUserRepo.findTeacherByUsername(username);
         if (user.isPresent()) {
-            if (!encoder.matches(user.get().getPassword(),password)) {
+            if (!encoder.matches(password,user.get().getPassword())) {
                 throw new UserNotFoundException();
             }
             return user.get();
