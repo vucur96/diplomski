@@ -141,7 +141,9 @@ public class AppUserService {
     public Long addStudent(RegStudentDTO student) throws IOException,IllegalArgumentException {
 
         String basePath = System.getProperty("user.dir");
-        String imageFolderPath = Paths.get(basePath, "..", "vue_front", "public", "assets", "Images").toString();
+        Path imageFolderPath = Paths.get(basePath, "..", "vue_front", "public", "assets", "Images");
+
+        Files.createDirectories(imageFolderPath);
 
         student.images()
                 .transferTo(new File(imageFolderPath + "/" + student.images().getOriginalFilename()));
