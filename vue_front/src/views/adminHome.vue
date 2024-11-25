@@ -84,7 +84,9 @@ export default {
             const data = response.data;
             this.chartData.labels = data.map((item) => item.subjectName);
             this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
-        })
+        }).catch((error) => {
+                console.error('Error fetching chart data:', error);
+            });
     },
     methods:{
         accept(id){
@@ -101,21 +103,6 @@ export default {
     },
     components:{
         BarChart: Bar
-    },
-    mounted() {
-    SubjectService.GetTeachersPerSubject()
-        .then((response) => {
-            console.log('Response data:', response.data); // Verify the API response
-            const data = response.data;
-
-            this.chartData.labels = data.map((item) => item.subjectName);
-            this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
-
-            console.log('Updated chartData:', this.chartData); // Check the transformed chartData
-        })
-        .catch((error) => {
-            console.error('Error fetching chart data:', error);
-        });
-},
+    }
 }
 </script>
