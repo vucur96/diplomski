@@ -56,7 +56,19 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 export default {
     data() {
         return {
-            requests:[]
+            requests:[],
+            chartData: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Teacher Count',
+                    data: [],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+            ],
+        },
         };
     },
     created(){
@@ -65,18 +77,8 @@ export default {
         });
         SubjectService.GetTeachersPerSubject().then((response)=>{
             const data = response.data;
-            this.chartData = {
-                labels: data.map(item => item.subjectName),
-                datasets: [
-                    {
-                        label: 'Teacher Count',
-                        data: data.map(item => item.teacherCount),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            };
+            this.chartData.labels = data.map((item) => item.subjectName);
+            this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
         })
     },
     methods:{
