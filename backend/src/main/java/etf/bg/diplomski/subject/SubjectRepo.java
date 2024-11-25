@@ -16,8 +16,8 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
   @Query(value = "select * from subject where status='PENDING'", nativeQuery = true)
   List<Subject> findAllSubjectRequests();
 
-  @Query("SELECT new etf.bg.diplomski.teacher.TeacherToSubjectCountDTO(s.name, COUNT(t)) " +
+  @Query(value="SELECT new etf.bg.diplomski.teacher.TeacherToSubjectCountDTO(s.name, COUNT(t)) " +
           "FROM Subject s JOIN s.teachers t " +
-          "GROUP BY s.name")
+          "GROUP BY s.name",nativeQuery = true)
   List<TeacherToSubjectCountDTO> countTeachersPerSubject();
 }
