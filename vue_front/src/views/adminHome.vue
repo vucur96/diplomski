@@ -14,7 +14,9 @@
             <h2>Broj nastavnika po predmetima:</h2>
             <div v-if="chartData && chartData.labels && chartData.datasets && chartData.labels.length > 0 && chartData.datasets[0].data.length > 0">
                 <BarChart :chart-data="chartData" />
-                {{ chartData }}
+                {{ chartData.labels }}
+                <hr>
+                {{ chartData.datasets[0].data }}
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
