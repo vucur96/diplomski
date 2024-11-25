@@ -1,5 +1,7 @@
 package etf.bg.diplomski.subject;
 
+import etf.bg.diplomski.teacher.TeacherForSubjectDTO;
+import etf.bg.diplomski.teacher.TeacherToSubjectCountDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +16,8 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
   @Query(value = "select * from subject where status='PENDING'", nativeQuery = true)
   List<Subject> findAllSubjectRequests();
 
-  @Query("SELECT s.name, COUNT(t) FROM Subject s LEFT JOIN s.teachers t GROUP BY s.name")
-  List<Object[]> countTeachersPerSubject();
+  @Query("SELECT new etf.bg.diplomski.teacher.TeacherToSubjectCountDTO(s.name, COUNT(t)) " +
+          "FROM Subject s JOIN s.teachers t " +
+          "GROUP BY s.name")
+  List<TeacherToSubjectCountDTO> countTeachersPerSubject();
 }

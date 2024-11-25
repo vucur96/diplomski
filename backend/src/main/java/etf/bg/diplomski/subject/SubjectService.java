@@ -70,11 +70,7 @@ public class SubjectService {
   }
 
   public List<TeacherToSubjectCountDTO> getSubjectTeacherCounts() {
-    List<Object[]> result = subjectRepo.countTeachersPerSubject();
-
-    return result.stream()
-            .map(obj -> new TeacherToSubjectCountDTO((String) obj[0], ((Long) obj[1]).intValue()))
-            .collect(Collectors.toList());
+    return subjectRepo.countTeachersPerSubject();
   }
 
 }
