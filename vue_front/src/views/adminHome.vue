@@ -14,7 +14,7 @@
             <h2>Broj nastavnika po predmetima:</h2>
             <div v-if="chartData.labels.length > 0">
                 <BarChart :chart-data="chartData" :options="chartOptions" />
-                {{chartData.labels}}
+                {{chartData}}
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
@@ -81,28 +81,6 @@ export default {
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
         });
-        SubjectService.GetTeachersPerSubject().then((response)=>{
-            const data = response.data;
-            if (Array.isArray(data) && data.length > 0) {
-                this.chartData = {
-                    labels: data.map(item => item.subjectName),
-                    datasets: [
-                        {
-                            label: 'Teacher Count',
-                            data: data.map(item => item.teacherCount),
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }
-                    ]
-                };
-            } else {
-                console.error('Invalid data format:', data);
-            }
-            console.log(this.chartData)
-        }).catch((error) => {
-                console.error('Error fetching chart data:', error);
-            });
     },
     methods:{
         accept(id){
@@ -119,6 +97,29 @@ export default {
     },
     components:{
         BarChart: Bar
-    }
+    },
+    mounted() {
+    SubjectService.GetTeachersPerSubject().then((response) => {
+        const data = response.data;
+
+        // Update chart data
+        this.chartData = {
+            labels: data.map((item) => item.subjectName),
+            datasets: [
+                {
+                    label: 'Teacher Count',
+                    data: data.map((item) => item.teacherCount),
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                },
+            ],
+        };
+
+        console.log(this.chartData); // Log to check the data
+    }).catch((error) => {
+        console.error('Error fetching chart data:', error);
+    });
+}
 }
 </script>
