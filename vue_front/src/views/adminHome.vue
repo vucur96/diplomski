@@ -78,7 +78,16 @@ export default {
     created(){
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
+
+            SubjectService.GetTeachersPerSubject().then((response) => {
+                const data = response.data;
+
+                this.chartData.labels = data.map((item) => item.subjectName);
+                this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
+                
+            })
         });
+        
     },
     methods:{
         accept(id){
@@ -95,17 +104,6 @@ export default {
     },
     components:{
         BarChart: Bar
-    },
-    mounted() {
-    SubjectService.GetTeachersPerSubject().then((response) => {
-        const data = response.data;
-
-        this.chartData.labels = data.map((item) => item.subjectName);
-        this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
-        
-    }).catch((error) => {
-        console.error('Error fetching chart data:', error);
-    });
-}
+    }
 }
 </script>
