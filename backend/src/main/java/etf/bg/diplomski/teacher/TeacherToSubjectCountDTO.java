@@ -1,4 +1,4 @@
 package etf.bg.diplomski.teacher;
 
-public record TeacherToSubjectCountDTO(String subjectName, int teacherCount) {
+public record TeacherToSubjectCountDTO(String subjectName, long teacherCount) {
 }

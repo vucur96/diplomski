@@ -17,7 +17,7 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
   List<Subject> findAllSubjectRequests();
 
   @Query(value="SELECT new etf.bg.diplomski.teacher.TeacherToSubjectCountDTO(s.name, COUNT(t)) " +
-          "FROM Subject s JOIN s.teachers t " +
+          "FROM Subject s JOIN s.teacher t " +
           "GROUP BY s.name",nativeQuery = true)
   List<TeacherToSubjectCountDTO> countTeachersPerSubject();
 }
