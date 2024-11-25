@@ -102,21 +102,9 @@ export default {
     SubjectService.GetTeachersPerSubject().then((response) => {
         const data = response.data;
 
-        // Update chart data
-        this.chartData = {
-            labels: data.map((item) => item.subjectName),
-            datasets: [
-                {
-                    label: 'Teacher Count',
-                    data: data.map((item) => item.teacherCount),
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                },
-            ],
-        };
-
-        console.log(this.chartData); // Log to check the data
+        this.chartData.labels = data.map((item) => item.subjectName);
+        this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
+        
     }).catch((error) => {
         console.error('Error fetching chart data:', error);
     });
