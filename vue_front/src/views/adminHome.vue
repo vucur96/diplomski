@@ -14,6 +14,7 @@
             <h2>Broj nastavnika po predmetima:</h2>
             <div v-if="chartData.labels.length > 0">
                 <BarChart :chart-data="chartData" :options="chartOptions" />
+                {{chartData.labels}}
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
