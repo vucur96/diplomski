@@ -1,5 +1,6 @@
 package etf.bg.diplomski.subject;
 
+import etf.bg.diplomski.teacher.TeacherToSubjectCountDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,5 +64,10 @@ public class SubjectController {
       return new ResponseEntity<>("No subject with that name.", HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>("Subject accepted!", HttpStatus.OK);
+  }
+
+  @GetMapping("/teacherPerSubjectCounts")
+  public List<TeacherToSubjectCountDTO> getSubjectTeacherCounts() {
+    return subjectService.getSubjectTeacherCounts();
   }
 }
