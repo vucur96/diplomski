@@ -82,8 +82,12 @@ export default {
         });
         SubjectService.GetTeachersPerSubject().then((response)=>{
             const data = response.data;
-            this.chartData.labels = data.map((item) => item.subjectName);
-            this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
+            if (Array.isArray(data) && data.length > 0) {
+                    this.chartData.labels = data.map((item) => item.subjectName || "Unknown Subject");
+                    this.chartData.datasets[0].data = data.map((item) => item.teacherCount || 0);
+                } else {
+                    console.error('Invalid data format:', data);
+                }
         }).catch((error) => {
                 console.error('Error fetching chart data:', error);
             });
