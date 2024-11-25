@@ -16,9 +16,10 @@ public interface SubjectRepo extends JpaRepository<Subject, Long> {
   @Query(value = "select * from subject where status='PENDING'", nativeQuery = true)
   List<Subject> findAllSubjectRequests();
 
-  @Query(value = "SELECT s.name, COUNT(t.id) " +
-          "FROM Subject s " +
-          "JOIN s.teacher t " +
-          "GROUP BY s.name", nativeQuery = true)
+  @Query(value = "SELECT s.name, COUNT(ts.teacher_id) AS teacher_count " +
+          "FROM teachers_subjects ts " +
+          "JOIN subject s ON ts.subject_id = s.id " +
+          "GROUP BY s.name",
+          nativeQuery = true)
   List<Object[]> findSubjectTeacherCounts();
 }
