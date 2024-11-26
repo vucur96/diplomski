@@ -43,6 +43,9 @@ public class ApplicationURL {
     public static final String UPDATE = V1+"/update";
     public static final String GET_AVERAGE_SCORE_FOR_TEACHER = V1+"/getAverageScoreForTeacher";
     public static final String GET_NEXT_FIVE_LESSONS = V1+"/getNextFiveLessons";
+    public static final String GET_GENDER_PERCENTAGE_TEACHER = V1+"/GetTeachersPercentagePerGender";
+    public static final String GET_GENDER_PERCENTAGE_Student = V1+"/GetStudentsPercentagePerGender";
+
     public static final String ADMIN_LOGIN = V1+"/adminLogin";
 
 }

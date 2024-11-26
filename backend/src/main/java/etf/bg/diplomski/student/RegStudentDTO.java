@@ -11,6 +11,7 @@ public record RegStudentDTO(
     String address,
     String phone,
     String email,
+    String gender,
     MultipartFile images ,
     SchoolType school,
     int grade) {}

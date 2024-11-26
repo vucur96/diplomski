@@ -11,12 +11,15 @@
         </header>
 
         <div>
-            <h2>Broj nastavnika po predmetima:</h2>
+            <h2>Teachers count for each subject:</h2>
             <BarChart
-                v-bind:labels="chartData.labels"
-                v-bind:datasets="chartData.datasets"
-                :options="chartOptions"
+                v-bind:labels="barChartData.labels"
+                v-bind:datasets="barChartData.datasets"
             />
+        </div>
+        <div>
+            <h2>Teacher genders:</h2>
+            <PieChart :chart-data="pieChartData" :options="pieChartOptions" />
         </div>
 
         <table v-if='requests.length>0'>
@@ -52,27 +55,45 @@
 import UserService from '../services/UserService.js';
 import SubjectService from '../services/SubjectService.js';
 
-import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Bar, Pie } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale ,
+    ArcElement} from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ArcElement);
 
 export default {
     data() {
         return {
             requests:[],
-            chartData: {
-            labels: [],
-            datasets: [
+            barChartData: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Teacher Count',
+                        data: [],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                ],
+            },
+            pieChartData: {
+                labels: [],
+                datasets: [
                 {
-                    label: 'Teacher Count',
                     data: [],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
                 },
-            ],
-        },
+                ],
+            },
+            pieChartOptions: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                },
+            },
         };
     },
     created(){
@@ -82,11 +103,19 @@ export default {
             SubjectService.GetTeachersPerSubject().then((response) => {
                 const data = response.data;
 
-                this.chartData.labels = data.map((item) => item.subjectName);
-                this.chartData.datasets[0].data = data.map((item) => item.teacherCount);
+                this.barChartData.labels = data.map((item) => item.subjectName);
+                this.barChartData.datasets[0].data = data.map((item) => item.teacherCount);
                 
             })
         });
+
+        UserService.getTeachersPercantage().then((response)=>{
+            const data= response.data;
+
+            this.pieChartData.labels = data.map((item) => item.gender);
+            this.pieChartData.datasets[0].data = data.map((item) => item.percentage);
+
+        })
         
     },
     methods:{
@@ -102,8 +131,9 @@ export default {
             });
         }
     },
-    components:{
-        BarChart: Bar
+    components: {
+        BarChart: Bar,
+        PieChart :Pie,
     }
 }
 </script>

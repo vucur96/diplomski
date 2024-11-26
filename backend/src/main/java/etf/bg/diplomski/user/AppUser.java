@@ -34,6 +34,9 @@ public class AppUser extends BaseClass {
     private String email;
 
     @Column
+    private String gender;
+
+    @Column
     private String imageURL;
 
     @Column
@@ -47,6 +50,7 @@ public class AppUser extends BaseClass {
             String address,
             String phone,
             String mail,
+            String gender,
             String imageURL,
             UserStatus status) {
         this.username = username;
@@ -56,6 +60,7 @@ public class AppUser extends BaseClass {
         this.address = address;
         this.phone = phone;
         this.email = mail;
+        this.gender=gender;
         this.imageURL = imageURL;
         this.status = status;
     }

@@ -151,7 +151,7 @@ class UserService{
       }
     
     
-      registerStudent(username,password,firstName,lastName,address,phone,email,img,grade,school){
+      registerStudent(username,password,firstName,lastName,address,phone,email,gender,img,grade,school){
         let data=new FormData();
         data.append("username",username);
         data.append("password",password);
@@ -159,6 +159,7 @@ class UserService{
         data.append("lastName",lastName);
         data.append("address",address);
         data.append("email",email);
+        data.append("gender",gender);
         data.append("phone",phone);
         data.append("images",img);
         data.append("school",school);
@@ -167,7 +168,7 @@ class UserService{
         return axios.post(BACKEND_URL+'/student/v1/addStudent', data);
       }
     
-      registerTeacher(username,password,firstName,lastName,address,phone,email,img,cv,subjects,newSubject,description,grades,
+      registerTeacher(username,password,firstName,lastName,address,phone,email,gender,img,cv,subjects,newSubject,description,grades,
         wdyHearAboutUs) {
         let data=new FormData();
         data.append("username",username);
@@ -177,6 +178,7 @@ class UserService{
         data.append("address",address);
         data.append("phone",phone);
         data.append("email",email);
+        data.append("gender",gender);
         data.append("images",img);
         data.append("cv",cv);
         data.append("subjects",subjects);
@@ -188,6 +190,11 @@ class UserService{
         return axios.post(BACKEND_URL+'/teacher/v1/addRegistrationRequest', data);
       
         }
+
+        
+        getTeachersPercantage() {
+        return axios.get(BACKEND_URL+'/teacher/v1/GetTeachersPercentagePerGender');
+      }
     
     
 }

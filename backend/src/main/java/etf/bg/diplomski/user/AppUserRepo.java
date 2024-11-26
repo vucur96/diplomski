@@ -67,4 +67,13 @@ public interface AppUserRepo extends JpaRepository<AppUser, Long> {
   )
     double getAverageScoreForTeacher(Long id);
 
+  @Query(
+          value = "SELECT gender, " +
+                  "COUNT(*) * 100.0 / (SELECT COUNT(*) FROM app_user WHERE type = 'Teacher') AS percentage " +
+                  "FROM app_user " +
+                  "WHERE type = 'Teacher' "+
+                  "GROUP BY  gender",
+          nativeQuery = true
+  )
+    List<Object[]> getTeachersGendersPercantage();
 }

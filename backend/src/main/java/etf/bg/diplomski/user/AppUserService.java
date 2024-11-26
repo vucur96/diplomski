@@ -1,5 +1,6 @@
 package etf.bg.diplomski.user;
 
+import etf.bg.diplomski.common.PercentageDTO;
 import etf.bg.diplomski.common.SchoolType;
 import etf.bg.diplomski.student.RegStudentDTO;
 import etf.bg.diplomski.student.Student;
@@ -11,6 +12,7 @@ import etf.bg.diplomski.teacher.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +25,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static etf.bg.diplomski.common.UserStatus.ACTIVE;
@@ -105,6 +108,7 @@ public class AppUserService {
                             teacher.address(),
                             teacher.phone(),
                             teacher.email(),
+                            teacher.gender(),
                             "Images/" + teacher.images().getOriginalFilename(),
                             PENDING,
                             "CV/" + teacher.cv().getOriginalFilename(),
@@ -158,6 +162,7 @@ public class AppUserService {
                         student.address(),
                         student.phone(),
                         student.email(),
+                        student.gender(),
                         "/assets/Images/" + student.images().getOriginalFilename(),
                         ACTIVE,
                         student.school(),
@@ -328,4 +333,10 @@ public class AppUserService {
         }
     }
 
+    public List<PercentageDTO> getTeachersGendersPercentage() {
+        List<Object[]> results = appUserRepo.getTeachersGendersPercantage();
+        return results.stream()
+                .map(result -> new PercentageDTO((String) result[0], (Long) result[1]))
+                .toList();
+    }
 }

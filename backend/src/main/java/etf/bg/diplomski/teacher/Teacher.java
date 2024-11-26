@@ -42,13 +42,14 @@ public class Teacher extends AppUser {
       String address,
       String phone,
       String email,
+      String gender,
       String imgURL,
       UserStatus userStatus,
       String cvUrl,
       List<Subject> subjects,
       GradeLevel grade,
       String wdyHearAboutUs) {
-    super(username, password, firstName, lastName, address, phone, email, imgURL, userStatus);
+    super(username, password, firstName, lastName, address, phone, email, gender, imgURL, userStatus);
     this.subjects = subjects;
     this.cvUrl = cvUrl;
     this.grade=grade;

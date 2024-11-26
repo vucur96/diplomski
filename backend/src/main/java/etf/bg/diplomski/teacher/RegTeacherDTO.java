@@ -14,6 +14,7 @@ public record RegTeacherDTO(
     String address,
     String phone,
     String email,
+    String gender,
     MultipartFile images,
     MultipartFile cv,
     List<Subject> subjects,

@@ -21,8 +21,8 @@ public class Student extends AppUser {
     @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
     private List<Lesson> lesson;
 
-    public Student(String username, String password, String firstName, String lastName, String address, String phone, String email, String imgURL, UserStatus userStatus, SchoolType school, int grade) {
-        super(username, password, firstName, lastName, address, phone, email, imgURL, userStatus);
+    public Student(String username, String password, String firstName, String lastName, String address, String phone, String email,String gender, String imgURL, UserStatus userStatus, SchoolType school, int grade) {
+        super(username, password, firstName, lastName, address, phone, email, gender, imgURL, userStatus);
         this.school = school;
         this.studentGrade = grade;
     }

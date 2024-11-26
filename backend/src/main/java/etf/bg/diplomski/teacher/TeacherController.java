@@ -87,6 +87,7 @@ public class TeacherController {
       @RequestParam("address") String address,
       @RequestParam("phone") String phone,
       @RequestParam("email") String email,
+      @RequestParam("gender") String gender,
       @RequestParam("images") MultipartFile images,
       @RequestParam("cv") MultipartFile cv,
       @RequestParam("subjects") List<String> subjects,
@@ -108,6 +109,7 @@ public class TeacherController {
             address,
             phone,
             email,
+            gender,
             images,
             cv,
             listOfSubjects,
@@ -170,6 +172,12 @@ public class TeacherController {
   @PostMapping(GET_NEXT_FIVE_LESSONS)
   public ResponseEntity<?> getNextFiveLessons(@RequestBody IdDTO data){
     return new ResponseEntity<>(lessonService.getNextFiveLessons(data.id()),HttpStatus.OK);
+  }
+
+  @Operation(description = "Getting info about male and female teachers in the app.")
+  @GetMapping(GET_GENDER_PERCENTAGE_TEACHER)
+  public ResponseEntity<?> getGenderPercentage(){
+    return new ResponseEntity<>(appUserService.getTeachersGendersPercentage(),HttpStatus.OK);
   }
 
 }

@@ -49,12 +49,12 @@ public class AppUserServiceTest {
     public void SuccessfulRegistrationOfNewStudent() throws IOException {
 
         Student student = new Student("petar", "petrovic", "petar", "petrovic",
-                "address", "0635475635", "petar@gmail.com","",UserStatus.ACTIVE, SchoolType.ELEMENTARY,5);
+                "address", "0635475635", "petar@gmail.com","male","",UserStatus.ACTIVE, SchoolType.ELEMENTARY,5);
 
 
         MockMultipartFile file = new MockMultipartFile("test.png", "test.png", "image/png", new byte[0]);
         RegStudentDTO studentDTO = new RegStudentDTO("petar", "petrovic", "petar", "petrovic",
-                "address", "0635475635", "petar@gmail.com",  file, SchoolType.ELEMENTARY,5);
+                "address", "0635475635", "petar@gmail.com", "male", file, SchoolType.ELEMENTARY,5);
 
 
         when(appUserRepo.save(any(Student.class))).thenReturn(new Student());

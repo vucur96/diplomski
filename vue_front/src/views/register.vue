@@ -51,6 +51,12 @@
             </div>
         </div>
         <div class="form-group row">
+            <lable>Gender:</lable>
+            <div class="form-group col-md-6">
+            <input type="text" class="form-control" v-model="gender"  required>
+            </div>
+        </div>
+        <div class="form-group row">
             <lable>Image:</lable>
             <div class="form-group col-md-6">
                 <input type="file"  @change="selectFile($event)" >
@@ -141,6 +147,7 @@ export default {
             address:"",
             phone:"",
             email:"",
+            gender:"",
             type:"",
             school:"",
             grade:0,
@@ -160,7 +167,7 @@ export default {
 
     register(){
         if(!this.username || !this.password || !this.repetedPassword|| !this.firstName || !this.lastName|| !this.address
-        || !this.phone || !this.email){
+        || !this.phone || !this.email || !this.gender){
             this.message="All fields are required!";
         }else{
         if(this.password==this.repetedPassword){
@@ -169,12 +176,12 @@ export default {
                 this.message="Password must contain one uppercase letter, one lowercase letter,one digit,one special caracter, minimum 8 and maximum 16 characters!"
             }else{
                 if (this.type=="student"){
-                UserService.registerStudent(this.username,this.password,this.firstName,this.lastName,this.address,this.phone,this.email,this.image,
+                UserService.registerStudent(this.username,this.password,this.firstName,this.lastName,this.address,this.phone,this.email,this.gender,this.image,
                 this.grade,this.school).then((response)=>{
                     alert(response.data)
                 });
                 }else{
-                UserService.registerTeacher(this.username,this.password,this.firstName,this.lastName,this.address,this.phone,this.email,this.image
+                UserService.registerTeacher(this.username,this.password,this.firstName,this.lastName,this.address,this.phone,this.email,this.gender,this.image
                 ,this.cv,this.chosenSubjects,this.newSubject,this.description,this.grades,this.wdyHearAboutUs).then((response)=>{
                     alert(response.data);});
                 }
