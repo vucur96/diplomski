@@ -19,6 +19,7 @@
             <column name="email" type="varchar(250)">
                 <constraints unique="true" uniqueConstraintName="app_user_email_unq"/>
             </column>
+            <column name="gender" type="varchar(250)"/>
             <column name="imageurl" type="varchar(250)"/>
             <column name="type" type="varchar(250)"/>
             <column name="status" type="smallint"/>
