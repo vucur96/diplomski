@@ -98,7 +98,7 @@ export default {
             },
         };
     },
-    created(){
+    mounted(){
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
         });
