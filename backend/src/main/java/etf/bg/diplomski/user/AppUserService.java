@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -335,8 +336,10 @@ public class AppUserService {
 
     public List<PercentageDTO> getTeachersGendersPercentage() {
         List<Object[]> results = appUserRepo.getTeachersGendersPercantage();
+        logger.info(results.toString());
         return results.stream()
-                .map(result -> new PercentageDTO((String) result[0], (Long) result[1]))
+                .map(result -> new PercentageDTO((String) result[0],  ((BigDecimal) result[1]).stripTrailingZeros().toPlainString()
+                ))
                 .toList();
     }
 }

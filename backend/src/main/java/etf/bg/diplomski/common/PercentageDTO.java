@@ -1,4 +1,6 @@
 package etf.bg.diplomski.common;
 
-public record PercentageDTO(String gender,Long percent) {
+import java.math.BigDecimal;
+
+public record PercentageDTO(String gender, String percent) {
 }
