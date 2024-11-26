@@ -44,12 +44,13 @@ public class StudentController {
       @RequestParam("address") String address,
       @RequestParam("phone") String phone,
       @RequestParam("email") String email,
+      @RequestParam("gender") String gender,
       @RequestParam("images") MultipartFile images,
       @RequestParam("school") SchoolType school,
       @RequestParam("grade") int grade) {
     RegStudentDTO newStudent =
         new RegStudentDTO(
-            username, password, firstName, lastName, address, phone, email, images, school, grade);
+            username, password, firstName, lastName, address, phone, email, gender, images, school, grade);
     try {
       return new ResponseEntity<>(appUserService.addStudent(newStudent), HttpStatus.OK);
     } catch (IOException e) {
