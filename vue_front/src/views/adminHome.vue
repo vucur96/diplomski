@@ -12,6 +12,7 @@
 
         <div>
             <h2>Teachers count for each subject:</h2>
+            {{ barChartData }}
             <BarChart
                 v-bind:labels="barChartData.labels"
                 v-bind:datasets="barChartData.datasets"
@@ -19,6 +20,7 @@
         </div>
         <div>
             <h2>Teacher genders:</h2>
+            {{ pieChartData }}
             <PieChart :chart-data="pieChartData" :options="pieChartOptions" />
         </div>
 
@@ -99,14 +101,6 @@ export default {
     created(){
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
-
-            SubjectService.GetTeachersPerSubject().then((response) => {
-                const data = response.data;
-
-                this.barChartData.labels = data.map((item) => item.subjectName);
-                this.barChartData.datasets[0].data = data.map((item) => item.teacherCount);
-                
-            })
         });
 
         UserService.getTeachersPercantage().then((response)=>{
@@ -116,6 +110,14 @@ export default {
             this.pieChartData.datasets[0].data = data.map((item) => item.percentage);
 
         })
+
+        SubjectService.GetTeachersPerSubject().then((response) => {
+                const data = response.data;
+
+                this.barChartData.labels = data.map((item) => item.subjectName);
+                this.barChartData.datasets[0].data = data.map((item) => item.teacherCount);
+                
+            })
         
     },
     methods:{
