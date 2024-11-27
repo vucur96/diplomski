@@ -348,7 +348,7 @@ public class AppUserService {
         List<Object[]> results = appUserRepo.getTeachersPerGradeLevel();
         logger.info(results.toString());
         return results.stream()
-                .map(result -> new TeacherPerGradeLevelDTO( GradeLevel.values()[(int) result[0]].toString(), (Long) result[1]))
+                .map(result -> new TeacherPerGradeLevelDTO( GradeLevel.values()[(short) result[0]].toString(), (Long) result[1]))
                 .toList();
     }
 
