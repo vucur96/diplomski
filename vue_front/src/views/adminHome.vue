@@ -129,7 +129,7 @@ export default {
         
         })
 
-        UserService.getTeachersPercantage()()
+        UserService.getTeachersPercantage()
             .then((response) => {
                 const data = response.data;
                 this.pieChartData.labels = data.map((item) => item.gender);
