@@ -10,7 +10,7 @@
                 <b-button class="btn btn-primary" @click="logout">Log out</b-button>
         </header>
 
-        <div>
+        <!-- <div>
             <h2>Teachers count for each subject:</h2>
             {{ barChartData.labels }}
             <BarChart
@@ -23,7 +23,7 @@
             <h2>Teacher genders:</h2>
             {{ pieChartData.labels }}
             <PieChart :chart-data="pieChartData" :options="ChartOptions" />
-        </div>
+        </div> -->
 
         <table v-if='requests.length>0'>
             <tr>
@@ -113,20 +113,20 @@ export default {
             this.requests=response.data
         });
 
-        // UserService.getTeachersPercantage().then((response)=>{
-        //         const data= response.data;
+        UserService.getTeachersPercantage().then((response)=>{
+            const data= response.data;
 
-        //         this.pieChartData.labels = data.map((item) => item.gender);
-        //         this.pieChartData.datasets[0].data = data.map((item) => item.percent);
+            this.pieChartData.labels = data.map((item) => item.gender);
+            this.pieChartData.datasets[0].data = data.map((item) => item.percent);
+        })
 
-        //         SubjectService.GetTeachersPerSubject().then((response) => {
-        //             const retData = response.data;
+        SubjectService.GetTeachersPerSubject().then((response) => {
+        const retData = response.data;
 
-        //             this.barChartData.labels = retData.map((item) => item.subjectName);
-        //             this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
-                    
-        //          })
-        //     })
+        this.barChartData.labels = retData.map((item) => item.subjectName);
+        this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
+        
+        })
         
     },
     methods:{
@@ -141,10 +141,10 @@ export default {
                 window.location.reload();
             });
         }
-    },
-    components: {
-        BarChart: Bar,
-        PieChart :Pie,
-    }
+    }//,
+    // components: {
+    //     BarChart: Bar,
+    //     PieChart :Pie,
+    // }
 }
 </script>
