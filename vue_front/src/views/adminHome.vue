@@ -50,6 +50,7 @@
         <div>
             <h2>Teacher genders:</h2>
             <div v-if="pieChartData.labels.length > 0">
+                {{ pieChartData.labels }}
                 <PieChart :chart-data="pieChartData" />
             </div>
             <div v-else>
