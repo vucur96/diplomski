@@ -60,7 +60,6 @@
             <div class="chart-item">
                 <h2>Teachers count for each grade grup:</h2>
                 <div v-if="bar2ChartData.labels.length > 0 && bar2ChartData.datasets[0].data.length > 0">
-                    {{ bar2ChartData.labels }} || {{ bar2ChartData.datasets[0].data }}
                     <BarChart :data="bar2ChartData" :style="{ width: '400px', height: '300px' }" />
                 </div>
                 <div v-else>
