@@ -21,8 +21,7 @@
         </div>-->
         <div>
             <h2>Teacher genders:</h2>
-            {{ pieChartData.labels }}
-            <PieChart :chart-data="pieChartData" :options="ChartOptions" />
+            <PieChart :chart-data="pieChartData" :options="chartOptions" />
         </div> 
 
         <table v-if='requests.length>0'>
@@ -108,17 +107,11 @@ export default {
             requests: [], 
         };
     },
-    created(){
+    created() {
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
         });
 
-        UserService.getTeachersPercantage().then((response)=>{
-            const data= response.data;
-
-            this.pieChartData.labels = data.map((item) => item.gender);
-            this.pieChartData.datasets[0].data = data.map((item) => item.percent);
-        })
 
         SubjectService.GetTeachersPerSubject().then((response) => {
         const retData = response.data;
@@ -141,6 +134,19 @@ export default {
                 window.location.reload();
             });
         }
+    },
+    beforeRouteEnter(to, from, next) {
+        UserService.getTeachersPercantage().then((response)=>{
+            const data= response.data;
+
+            next((vm) => {
+                vm.pieChartData.labels = data.map((item) => item.gender);
+                vm.pieChartData.datasets[0].data = data.map((item) =>  parseFloat(item.percent));
+            });
+        }).catch((error) => {
+        console.error('Error fetching gender data:', error);
+        next();
+      });
     },
     components: {
     //     BarChart: Bar,
