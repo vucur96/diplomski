@@ -16,12 +16,13 @@
             <BarChart
                 v-bind:labels="barChartData.labels"
                 v-bind:datasets="barChartData.datasets"
+                :options="ChartOptions"
             />
         </div>
         <div>
             <h2>Teacher genders:</h2>
             {{ pieChartData }}
-            <PieChart :chart-data="pieChartData" :options="pieChartOptions" />
+            <PieChart :chart-data="pieChartData" :options="ChartOptions" />
         </div>
 
         <table v-if='requests.length>0'>
@@ -65,37 +66,46 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 
 export default {
     data() {
-        return {
-            requests:[],
-            barChartData: {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Teacher Count',
-                        data: [],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    },
-                ],
-            },
+         return {
             pieChartData: {
-                labels: [],
-                datasets: [
+            labels: [], // Gender labels (e.g., Male, Female)
+            datasets: [
                 {
-                    data: [],
-                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                label: 'Gender Distribution',
+                data: [], // Gender percentage data
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1,
                 },
-                ],
+            ],
             },
-            pieChartOptions: {
-                responsive: true,
-                plugins: {
+            
+            barChartData: {
+            labels: [], // Subject names
+            datasets: [
+                {
+                label: 'Teacher Count',
+                data: [], // Number of teachers per subject
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                },
+            ],
+            },
+
+            chartOptions: {
+            responsive: true,
+            plugins: {
                 legend: {
-                    position: 'top',
+                position: 'top',
                 },
+                title: {
+                display: true,
+                text: 'Chart Title', 
                 },
             },
+            },
+            requests: [], 
         };
     },
     created(){
@@ -106,7 +116,7 @@ export default {
                 const data= response.data;
 
                 this.pieChartData.labels = data.map((item) => item.gender);
-                this.pieChartData.datasets[0].data = data.map((item) => item.percentage);
+                this.pieChartData.datasets[0].data = data.map((item) => item.percent);
 
                 SubjectService.GetTeachersPerSubject().then((response) => {
                     const retData = response.data;
