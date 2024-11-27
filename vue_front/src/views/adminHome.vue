@@ -32,7 +32,7 @@
         <div>
             <h2>Teacher genders:</h2>
             <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
-                <PieChart :data="pieChartData" :width="400" :height="300" />
+                <PieChart :data="pieChartData" :style="{ width: '400px', height: '300px' }" />
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
@@ -41,7 +41,7 @@
         <div>
             <h2>Teachers count for each subject:</h2>
             <div v-if="barChartData.labels.length > 0 && barChartData.datasets[0].data.length > 0">
-                <BarChart :data="barChartData" :width="400" :height="300" />
+                <BarChart :data="barChartData" :style="{ width: '400px', height: '300px' }" />
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
@@ -90,19 +90,6 @@ export default {
                 borderWidth: 1,
                 },
             ],
-            },
-
-            chartOptions: {
-            responsive: true,
-            plugins: {
-                legend: {
-                position: 'top',
-                },
-                title: {
-                display: true,
-                text: 'Chart Title', 
-                },
-            },
             },
             requests: [], 
         };
