@@ -18,12 +18,12 @@
                 v-bind:datasets="barChartData.datasets"
                 :options="ChartOptions"
             />
-        </div>
+        </div>-->
         <div>
             <h2>Teacher genders:</h2>
             {{ pieChartData.labels }}
             <PieChart :chart-data="pieChartData" :options="ChartOptions" />
-        </div> -->
+        </div> 
 
         <table v-if='requests.length>0'>
             <tr>
@@ -141,10 +141,10 @@ export default {
                 window.location.reload();
             });
         }
-    }//,
-    // components: {
+    },
+    components: {
     //     BarChart: Bar,
-    //     PieChart :Pie,
-    // }
+       PieChart :Pie,
+    }
 }
 </script>
