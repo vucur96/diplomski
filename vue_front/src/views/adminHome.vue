@@ -111,22 +111,22 @@ export default {
     created(){
         UserService.getTeachersRequests().then((response)=>{
             this.requests=response.data
-
-            UserService.getTeachersPercantage().then((response)=>{
-                const data= response.data;
-
-                this.pieChartData.labels = data.map((item) => item.gender);
-                this.pieChartData.datasets[0].data = data.map((item) => item.percent);
-
-                SubjectService.GetTeachersPerSubject().then((response) => {
-                    const retData = response.data;
-
-                    this.barChartData.labels = retData.map((item) => item.subjectName);
-                    this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
-                    
-                 })
-            })
         });
+
+        // UserService.getTeachersPercantage().then((response)=>{
+        //         const data= response.data;
+
+        //         this.pieChartData.labels = data.map((item) => item.gender);
+        //         this.pieChartData.datasets[0].data = data.map((item) => item.percent);
+
+        //         SubjectService.GetTeachersPerSubject().then((response) => {
+        //             const retData = response.data;
+
+        //             this.barChartData.labels = retData.map((item) => item.subjectName);
+        //             this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
+                    
+        //          })
+        //     })
         
     },
     methods:{
