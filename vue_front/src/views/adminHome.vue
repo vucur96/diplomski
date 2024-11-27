@@ -178,7 +178,7 @@ export default {
                 console.error('Error fetching gender data:', error);
             });
 
-        SubjectService.GetTeachersPerGradeLevel().then((response) => {
+        UserService.GetTeachersPerGradeLevel().then((response) => {
         const retData = response.data;
 
         this.bar2ChartData={

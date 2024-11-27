@@ -46,6 +46,8 @@ public class ApplicationURL {
     public static final String GET_GENDER_PERCENTAGE_TEACHER = V1+"/GetTeachersPercentagePerGender";
     public static final String GET_GENDER_PERCENTAGE_STUDENT = V1+"/GetStudentsPercentagePerGender";
 
+    public static final String GET_COUNT_PER_GRADE_LEVEL_TEACHER=V1+"/getTeachersPerGradeLevel";
+
     public static final String ADMIN_LOGIN = V1+"/adminLogin";
 
 }
