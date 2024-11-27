@@ -19,11 +19,6 @@
                 :options="ChartOptions"
             />
         </div>-->
-        <div>
-            <h2>Teacher genders:</h2>
-            {{ pieChartData.labels }}
-            <PieChart :chart-data="pieChartData" :options="chartOptions" />
-        </div> 
 
         <table v-if='requests.length>0'>
             <tr>
@@ -51,6 +46,18 @@
         <div v-if='requests.length==0'>
         No requests.
         </div>
+        <hr>
+        <div>
+            <h2>Teacher genders:</h2>
+            <div v-if="pieChartData.labels.length > 0">
+                <PieChart :chart-data="pieChartData" />
+            </div>
+            <div v-else>
+                <p>Loading chart data...</p>
+            </div>
+        </div> 
+
+        
     </div>
 </template>
 
@@ -121,6 +128,19 @@ export default {
         this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
         
         })
+
+        UserService.getTeachersPercantage()()
+            .then((response) => {
+                const data = response.data;
+                this.pieChartData.labels = data.map((item) => item.gender);
+                this.pieChartData.datasets[0].data = data.map((item) => parseFloat(item.percent));
+
+                console.log('Fetched data: ',data);
+                console.log('Updated pieChartData: ',this.pieChartData)
+            })
+            .catch((error) => {
+            console.error('Error fetching gender data:', error);
+            });
         
     },
     methods:{
@@ -135,19 +155,6 @@ export default {
                 window.location.reload();
             });
         }
-    },
-    beforeRouteEnter(to, from, next) {
-        UserService.getTeachersPercantage().then((response)=>{
-            const data= response.data;
-
-            next((vm) => {
-                vm.pieChartData.labels = data.map((item) => item.gender);
-                vm.pieChartData.datasets[0].data = data.map((item) =>  parseFloat(item.percent));
-            });
-        }).catch((error) => {
-        console.error('Error fetching gender data:', error);
-        next();
-      });
     },
     components: {
     //     BarChart: Bar,
