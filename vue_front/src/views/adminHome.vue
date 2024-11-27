@@ -1,17 +1,7 @@
 <template>
     <div>
         <MenuComponent/>
-
-        <!-- <div>
-            <h2>Teachers count for each subject:</h2>
-            {{ barChartData.labels }}
-            <BarChart
-                v-bind:labels="barChartData.labels"
-                v-bind:datasets="barChartData.datasets"
-                :options="ChartOptions"
-            />
-        </div>-->
-
+        <h2>Registration requests:</h2>
         <table v-if='requests.length>0'>
             <tr>
                 <th>First name</th>
@@ -31,8 +21,8 @@
             <td><img v-bind:src=r.teacher.imgURL width="50" height="50" alt="Image not found"></td>
             <td>{{r.created}}</td>
             <td>{{r.changed}}</td>
-            <button @click="accept(r.id)" >Accept</button>
-            <button @click="reject(r.id)" >Reject</button>
+            <button class="btn btn-secondary" @click="accept(r.id)" >Accept</button>
+            <button class="btn btn-secondary" @click="reject(r.id)" >Reject</button>
             </tr>
         </table>
         <div v-if='requests.length==0'>
@@ -42,13 +32,21 @@
         <div>
             <h2>Teacher genders:</h2>
             <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
-                {{ pieChartData.labels }} || {{ pieChartData.datasets[0].data }}
-                <PieChart :data="pieChartData" />
+                <PieChart :data="pieChartData" :width="400" :height="300" />
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
             </div>
         </div> 
+        <div>
+            <h2>Teachers count for each subject:</h2>
+            <div v-if="barChartData.labels.length > 0 && barChartData.datasets[0].data.length > 0">
+                <BarChart :data="barChartData" :width="400" :height="300" />
+            </div>
+            <div v-else>
+                <p>Loading chart data...</p>
+            </div>
+        </div>
 
         
     </div>
@@ -118,14 +116,22 @@ export default {
         SubjectService.GetTeachersPerSubject().then((response) => {
         const retData = response.data;
 
-        this.barChartData.labels = retData.map((item) => item.subjectName);
-        this.barChartData.datasets[0].data = retData.map((item) => item.teacherCount);
-        
+        this.barChartData={
+            labels: retData.map((item) => item.subjectName),
+            datasets: [
+                {
+                    label: 'Teacher Count',
+                    data: retData.map((item) => parseFloat(item.teacherCount)), 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                },
+            ],
+        }
         })
 
         UserService.getTeachersPercantage()
         .then((response) => {
-            console.log('Fetched data:', response.data);
 
             const data = response.data;
 
@@ -139,8 +145,6 @@ export default {
                 },
                 ],
             };
-
-            console.log('Updated pieChartData:', this.pieChartData); 
             })
             .catch((error) => {
             console.error('Error fetching gender data:', error);
@@ -160,9 +164,9 @@ export default {
         }
     },
     components: {
-    //     BarChart: Bar,
-       PieChart :Pie,
-       MenuComponent
+        BarChart: Bar,
+        PieChart :Pie,
+        MenuComponent
     }
 }
 </script>
