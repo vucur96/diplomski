@@ -60,6 +60,7 @@
             <div class="chart-item">
                 <h2>Teachers count for each grade grup:</h2>
                 <div v-if="bar2ChartData.labels.length > 0 && bar2ChartData.datasets[0].data.length > 0">
+                    {{ bar2ChartData.labels }} || {{ bar2ChartData.datasets[0].data }}
                     <BarChart :data="bar2ChartData" :style="{ width: '400px', height: '300px' }" />
                 </div>
                 <div v-else>
@@ -158,6 +159,23 @@ export default {
         }
         })
 
+        UserService.GetTeachersPerGradeLevel().then((response) => {
+        const retData = response.data;
+
+        this.bar2ChartData={
+            labels: retData.map((item) => item.level),
+            datasets: [
+                {
+                    label: 'Teacher Count',
+                    data: retData.map((item) => parseFloat(item.teacherCount)), 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                },
+            ],
+        }
+        })
+
         UserService.getTeachersPercantage()
         .then((response) => {
 
@@ -177,23 +195,6 @@ export default {
             .catch((error) => {
                 console.error('Error fetching gender data:', error);
             });
-
-        UserService.GetTeachersPerGradeLevel().then((response) => {
-        const retData = response.data;
-
-        this.bar2ChartData={
-            labels: retData.map((item) => item.gradeGroupe),
-            datasets: [
-                {
-                    label: 'Teacher Count',
-                    data: retData.map((item) => parseFloat(item.teacherCount)), 
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1,
-                },
-            ],
-        }
-        })
 
         UserService.getStudentsPercantage()
         .then((response) => {
