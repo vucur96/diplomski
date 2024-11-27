@@ -1,5 +1,6 @@
 package etf.bg.diplomski.user;
 
+import etf.bg.diplomski.common.GradeLevel;
 import etf.bg.diplomski.common.PercentageDTO;
 import etf.bg.diplomski.common.SchoolType;
 import etf.bg.diplomski.student.RegStudentDTO;
@@ -336,6 +337,24 @@ public class AppUserService {
 
     public List<PercentageDTO> getTeachersGendersPercentage() {
         List<Object[]> results = appUserRepo.getTeachersGendersPercantage();
+        logger.info(results.toString());
+        return results.stream()
+                .map(result -> new PercentageDTO((String) result[0],  ((BigDecimal) result[1]).stripTrailingZeros().toPlainString()
+                ))
+                .toList();
+    }
+
+    public List<TeacherPerGradeLevelDTO> getTeachersPerGradeLevel() {
+        List<Object[]> results = appUserRepo.getTeachersPerGradeLevel();
+        logger.info(results.toString());
+        return results.stream()
+                .map(result -> new TeacherPerGradeLevelDTO((GradeLevel) result[0],  ((BigDecimal) result[1]).stripTrailingZeros().toPlainString()
+                ))
+                .toList();
+    }
+
+    public List<PercentageDTO> getStudentsGendersPercentage() {
+        List<Object[]> results = appUserRepo.getStudentsGendersPercantage();
         logger.info(results.toString());
         return results.stream()
                 .map(result -> new PercentageDTO((String) result[0],  ((BigDecimal) result[1]).stripTrailingZeros().toPlainString()

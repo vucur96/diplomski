@@ -116,4 +116,10 @@ public class StudentController {
                     data.username(), data.firstName(), data.lastName(),data.address(), data.phone(), data.email()),
             HttpStatus.OK);
   }
+
+  @Operation(description = "Getting info about male and female students in the app.")
+  @GetMapping(GET_GENDER_PERCENTAGE_STUDENT)
+  public ResponseEntity<?> getGenderPercentage(){
+    return new ResponseEntity<>(appUserService.getStudentsGendersPercentage(),HttpStatus.OK);
+  }
 }

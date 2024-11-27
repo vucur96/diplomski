@@ -195,7 +195,7 @@ export default {
         }
         })
 
-        UserService.getStudentPercantage()
+        UserService.getStudentsPercantage()
         .then((response) => {
 
             const data = response.data;

@@ -76,4 +76,24 @@ public interface AppUserRepo extends JpaRepository<AppUser, Long> {
           nativeQuery = true
   )
     List<Object[]> getTeachersGendersPercantage();
+
+  @Query(
+          value = "SELECT grade, " +
+                  "COUNT(*)  AS teacherCount " +
+                  "FROM app_user " +
+                  "WHERE type = 'Teacher' "+
+                  "GROUP BY  grade",
+          nativeQuery = true
+  )
+  List<Object[]> getTeachersPerGradeLevel();
+
+  @Query(
+          value = "SELECT gender, " +
+                  "COUNT(*) * 100.0 / (SELECT COUNT(*) FROM app_user WHERE type = 'Student') AS percentage " +
+                  "FROM app_user " +
+                  "WHERE type = 'Student' "+
+                  "GROUP BY  gender",
+          nativeQuery = true
+  )
+  List<Object[]> getStudentsGendersPercantage();
 }

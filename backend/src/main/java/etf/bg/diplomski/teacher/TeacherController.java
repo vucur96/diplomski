@@ -180,4 +180,10 @@ public class TeacherController {
     return new ResponseEntity<>(appUserService.getTeachersGendersPercentage(),HttpStatus.OK);
   }
 
+  @Operation(description = "Getting info about teachers count based on grade level in the app.")
+  @GetMapping(GET_GENDER_PERCENTAGE_TEACHER)
+  public ResponseEntity<?> getTeachersPerGradeLevel(){
+    return new ResponseEntity<>(appUserService.getTeachersPerGradeLevel(),HttpStatus.OK);
+  }
+
 }
