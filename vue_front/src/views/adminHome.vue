@@ -21,6 +21,7 @@
         </div>-->
         <div>
             <h2>Teacher genders:</h2>
+            {{ pieChartData.labels }}
             <PieChart :chart-data="pieChartData" :options="chartOptions" />
         </div> 
 
