@@ -241,7 +241,7 @@ export default {
   display: flex;
   flex-wrap: wrap; 
   justify-content: space-between; 
-  gap: 20px; 
+  gap: 50px; 
 }
 
 .chart-item {
