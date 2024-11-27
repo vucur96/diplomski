@@ -1,14 +1,6 @@
 <template>
     <div>
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">    
-            <RouterLink class="link"  to='/changepass'>Password change </RouterLink> 
-            <RouterLink class="link"  to='/teachers' >Teachers </RouterLink> 
-            <RouterLink  class="link" to='/students' > Students </RouterLink> 
-            <RouterLink class="link"  to='/addSubject'> New Subject </RouterLink> 
-            <RouterLink class="link"  to='/adminHome'>Home </RouterLink>
-            
-                <b-button class="btn btn-primary" @click="logout">Log out</b-button>
-        </header>
+        <MenuComponent/>
 
         <!-- <div>
             <h2>Teachers count for each subject:</h2>
@@ -49,9 +41,9 @@
         <hr>
         <div>
             <h2>Teacher genders:</h2>
-            <div v-if="pieChartData.labels.length > 0">
-                {{ pieChartData.labels }}
-                <PieChart :chart-data="pieChartData" />
+            <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
+                {{ pieChartData.labels }} || {{ pieChartData.datasets[0].data }}
+                <PieChart :data="pieChartData" />
             </div>
             <div v-else>
                 <p>Loading chart data...</p>
@@ -65,6 +57,7 @@
 <script>
 import UserService from '../services/UserService.js';
 import SubjectService from '../services/SubjectService.js';
+import MenuComponent from './menu.vue'
 
 import { Bar, Pie } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale ,
@@ -169,6 +162,7 @@ export default {
     components: {
     //     BarChart: Bar,
        PieChart :Pie,
+       MenuComponent
     }
 }
 </script>
