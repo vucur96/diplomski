@@ -131,18 +131,27 @@ export default {
         })
 
         UserService.getTeachersPercantage()
-            .then((response) => {
-                const data = response.data;
-                this.pieChartData.labels = data.map((item) => item.gender);
-                this.pieChartData.datasets[0].data = data.map((item) => parseFloat(item.percent));
+        .then((response) => {
+            console.log('Fetched data:', response.data);
 
-                console.log('Fetched data: ',data);
-                console.log('Updated pieChartData: ',this.pieChartData)
+            const data = response.data;
+
+            this.pieChartData = {
+                labels: data.map((item) => item.gender),
+                datasets: [
+                {
+                    data: data.map((item) => parseFloat(item.percent)), 
+                    backgroundColor: ['#FF6384', '#36A2EB'], 
+                    hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+                },
+                ],
+            };
+
+            console.log('Updated pieChartData:', this.pieChartData); 
             })
             .catch((error) => {
             console.error('Error fetching gender data:', error);
             });
-        
     },
     methods:{
         accept(id){
