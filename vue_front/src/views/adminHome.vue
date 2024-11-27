@@ -30,43 +30,43 @@
         </div>
         <hr>
         <div class="chart-container">
-        <div class="chart-item">
-            <h2>Teacher genders:</h2>
-            <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
-                <PieChart :data="pieChartData" :style="{ width: '400px', height: '300px' }" />
+            <div class="chart-item">
+                <h2>Teacher genders:</h2>
+                <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
+                    <PieChart :data="pieChartData" :style="{ width: '400px', height: '300px' }" />
+                </div>
+                <div v-else>
+                    <p>Loading chart data...</p>
+                </div>
+            </div> 
+            <div class="chart-item">
+                <h2>Student genders:</h2>
+                <div v-if="pie2ChartData.labels.length > 0 && pie2ChartData.datasets[0].data.length > 0">
+                    <PieChart :data="pie2ChartData" :style="{ width: '400px', height: '300px' }" />
+                </div>
+                <div v-else>
+                    <p>Loading chart data...</p>
+                </div>
+            </div> 
+            <div class="chart-item">
+                <h2>Teachers count for each subject:</h2>
+                <div v-if="barChartData.labels.length > 0 && barChartData.datasets[0].data.length > 0">
+                    <BarChart :data="barChartData" :style="{ width: '400px', height: '300px' }" />
+                </div>
+                <div v-else>
+                    <p>Loading chart data...</p>
+                </div>
             </div>
-            <div v-else>
-                <p>Loading chart data...</p>
-            </div>
-        </div> 
-        <div class="chart-item">
-            <h2>Student genders:</h2>
-            <div v-if="pie2ChartData.labels.length > 0 && pie2ChartData.datasets[0].data.length > 0">
-                <PieChart :data="pie2ChartData" :style="{ width: '400px', height: '300px' }" />
-            </div>
-            <div v-else>
-                <p>Loading chart data...</p>
-            </div>
-        </div> 
-        <div class="chart-item">
-            <h2>Teachers count for each subject:</h2>
-            <div v-if="barChartData.labels.length > 0 && barChartData.datasets[0].data.length > 0">
-                <BarChart :data="barChartData" :style="{ width: '400px', height: '300px' }" />
-            </div>
-            <div v-else>
-                <p>Loading chart data...</p>
+            <div class="chart-item">
+                <h2>Teachers count for each grade grup:</h2>
+                <div v-if="bar2ChartData.labels.length > 0 && bar2ChartData.datasets[0].data.length > 0">
+                    <BarChart :data="bar2ChartData" :style="{ width: '400px', height: '300px' }" />
+                </div>
+                <div v-else>
+                    <p>Loading chart data...</p>
+                </div>
             </div>
         </div>
-        <div class="chart-item">
-            <h2>Teachers count for each grade grup:</h2>
-            <div v-if="bar2ChartData.labels.length > 0 && bar2ChartData.datasets[0].data.length > 0">
-                <BarChart :data="bar2ChartData" :style="{ width: '400px', height: '300px' }" />
-            </div>
-            <div v-else>
-                <p>Loading chart data...</p>
-            </div>
-        </div>
-        
     </div>
 </template>
 
