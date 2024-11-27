@@ -12,7 +12,7 @@
 
         <div>
             <h2>Teachers count for each subject:</h2>
-            {{ barChartData }}
+            {{ barChartData.labels }}
             <BarChart
                 v-bind:labels="barChartData.labels"
                 v-bind:datasets="barChartData.datasets"
@@ -21,7 +21,7 @@
         </div>
         <div>
             <h2>Teacher genders:</h2>
-            {{ pieChartData }}
+            {{ pieChartData.labels }}
             <PieChart :chart-data="pieChartData" :options="ChartOptions" />
         </div>
 
