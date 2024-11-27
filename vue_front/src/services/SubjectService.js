@@ -57,7 +57,9 @@ class SubjectService{
         return axios.get(BACKEND_URL+'/subject/teacherPerSubjectCounts')
       }
     
-    
+      GetTeachersPerGradeLevel(){
+        return axios.get(BACKEND_URL+'/subject/getTeachersPerGradeLevel')
+      }
 }
 
 export default new SubjectService()

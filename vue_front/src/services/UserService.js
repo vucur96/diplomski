@@ -192,8 +192,12 @@ class UserService{
         }
 
         
-        getTeachersPercantage() {
+      getTeachersPercantage() {
         return axios.get(BACKEND_URL+'/teacher/v1/GetTeachersPercentagePerGender');
+      }
+
+      getStudentsPercantage() {
+        return axios.get(BACKEND_URL+'/student/v1/GetStudentsPercentagePerGender');
       }
     
     

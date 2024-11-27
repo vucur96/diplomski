@@ -29,7 +29,8 @@
         No requests.
         </div>
         <hr>
-        <div>
+        <div class="chart-container">
+        <div class="chart-item">
             <h2>Teacher genders:</h2>
             <div v-if="pieChartData.labels.length > 0 && pieChartData.datasets[0].data.length > 0">
                 <PieChart :data="pieChartData" :style="{ width: '400px', height: '300px' }" />
@@ -38,7 +39,16 @@
                 <p>Loading chart data...</p>
             </div>
         </div> 
-        <div>
+        <div class="chart-item">
+            <h2>Student genders:</h2>
+            <div v-if="pie2ChartData.labels.length > 0 && pie2ChartData.datasets[0].data.length > 0">
+                <PieChart :data="pie2ChartData" :style="{ width: '400px', height: '300px' }" />
+            </div>
+            <div v-else>
+                <p>Loading chart data...</p>
+            </div>
+        </div> 
+        <div class="chart-item">
             <h2>Teachers count for each subject:</h2>
             <div v-if="barChartData.labels.length > 0 && barChartData.datasets[0].data.length > 0">
                 <BarChart :data="barChartData" :style="{ width: '400px', height: '300px' }" />
@@ -47,7 +57,15 @@
                 <p>Loading chart data...</p>
             </div>
         </div>
-
+        <div class="chart-item">
+            <h2>Teachers count for each grade grup:</h2>
+            <div v-if="bar2ChartData.labels.length > 0 && bar2ChartData.datasets[0].data.length > 0">
+                <BarChart :data="bar2ChartData" :style="{ width: '400px', height: '300px' }" />
+            </div>
+            <div v-else>
+                <p>Loading chart data...</p>
+            </div>
+        </div>
         
     </div>
 </template>
@@ -78,8 +96,31 @@ export default {
                 },
             ],
             },
-            
+            pie2ChartData: {
+            labels: [], // Gender labels (e.g., Male, Female)
+            datasets: [
+                {
+                label: 'Gender Distribution',
+                data: [], // Gender percentage data
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1,
+                },
+            ],
+            },
             barChartData: {
+            labels: [], // Subject names
+            datasets: [
+                {
+                label: 'Teacher Count',
+                data: [], // Number of teachers per subject
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                },
+            ],
+            },
+            bar2ChartData: {
             labels: [], // Subject names
             datasets: [
                 {
@@ -134,7 +175,44 @@ export default {
             };
             })
             .catch((error) => {
-            console.error('Error fetching gender data:', error);
+                console.error('Error fetching gender data:', error);
+            });
+
+        SubjectService.GetTeachersPerGradeLevel().then((response) => {
+        const retData = response.data;
+
+        this.bar2ChartData={
+            labels: retData.map((item) => item.gradeGroupe),
+            datasets: [
+                {
+                    label: 'Teacher Count',
+                    data: retData.map((item) => parseFloat(item.teacherCount)), 
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                },
+            ],
+        }
+        })
+
+        UserService.getStudentPercantage()
+        .then((response) => {
+
+            const data = response.data;
+
+            this.pie2ChartData = {
+                labels: data.map((item) => item.gender),
+                datasets: [
+                {
+                    data: data.map((item) => parseFloat(item.percent)), 
+                    backgroundColor: ['#FF6384', '#36A2EB'], 
+                    hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+                },
+                ],
+            };
+            })
+            .catch((error) => {
+                console.error('Error fetching gender data:', error);
             });
     },
     methods:{
@@ -157,3 +235,18 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.chart-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  gap: 20px; 
+}
+
+.chart-item {
+  flex: 1 1 45%; 
+  min-width: 300px; 
+  height: 300px; 
+}
+</style>
