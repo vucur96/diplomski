@@ -59,7 +59,7 @@
         <div class="form-group row">
             <lable>Image:</lable>
             <div class="form-group col-md-6">
-                <input type="file"  @change="selectFile($event)" >
+                <input type="file"  id="photo" @change="onFileChange($event, 'photo')"  />
             </div>
         </div>
         <div class="form-group row">
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div v-if='type=="teacher"'>
-            CV:<input type="file" @change="selectCV($event)">
+            CV:<input type="file" id="cv" @change="onFileChange($event, 'cv')">
             <br>
             Subjects:
             <select multiple name="subjects" v-model='chosenSubjects'>
@@ -191,14 +191,14 @@ export default {
         }
         }},
 
-        selectFile(event) {
-        this.image = event.target.files[0];
+        onFileChange(event, type) {
+            const file = event.target.files[0]; 
+            if (type === 'photo') {
+                this.photo = file;
+            } else if (type === 'cv') {
+                this.cv = file;
+            }
         },
-
-
-        selectCV(event){
-        this.cv=event.target.files[0];
-        }
     }
     ,
     components:{
