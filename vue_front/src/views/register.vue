@@ -157,6 +157,8 @@ export default {
             grades:[],
             subjects:[],
             message:"",
+            image:null,
+            cv:null
         }
     },
     created(){
@@ -194,7 +196,7 @@ export default {
         onFileChange(event, type) {
             const file = event.target.files[0]; 
             if (type === 'photo') {
-                this.photo = file;
+                this.image = file;
             } else if (type === 'cv') {
                 this.cv = file;
             }
