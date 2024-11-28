@@ -186,4 +186,10 @@ public class TeacherController {
     return new ResponseEntity<>(appUserService.getTeachersPerGradeLevel(),HttpStatus.OK);
   }
 
+  @Operation(description = "Getting info about teachers count based on grade level in the app.")
+  @PostMapping(GET_STUDENTS_FOR_TEACHER)
+  public ResponseEntity<?> getStudentsForTeacher( @RequestParam("id") String id){
+    return new ResponseEntity<>(appUserService.getStudentsForTeacher(Long.getLong(id)),HttpStatus.OK);
+  }
+
 }

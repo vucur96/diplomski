@@ -5,6 +5,7 @@ import etf.bg.diplomski.teacher.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -96,4 +97,7 @@ public interface AppUserRepo extends JpaRepository<AppUser, Long> {
           nativeQuery = true
   )
   List<Object[]> getStudentsGendersPercantage();
+
+  @Query(value = "SELECT * FROM app_user WHERE type='Student'",nativeQuery = true)
+    Collection<Object> findStudentsForTeacher(Long id);
 }

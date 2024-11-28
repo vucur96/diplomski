@@ -360,4 +360,13 @@ public class AppUserService {
                 ))
                 .toList();
     }
+
+    public List<StudentDTO> getStudentsForTeacher(Long id) {
+        List<StudentDTO> students = new ArrayList<>();
+        for (Student student : appUserRepo.findStudentsForTeacher(id).stream().toList()) {
+            StudentDTO temp = studentDTOMapper.apply(student);
+            students.add(temp);
+        }
+        return students;
+    }
 }

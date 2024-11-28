@@ -86,18 +86,18 @@ export default {
     },
     created(){
         this.type=localStorage.getItem('userType');
-    if(this.type=='student'){
-      LessonService.getPastLessons(localStorage.getItem("userId")).then((lessons)=>{
-        this.pastLessons=lessons;
-      });
-      LessonService.getFutureLessons(localStorage.getItem("userId")).then((lessons)=>{
-        this.futureLessons=lessons;
-      });
-    }else{
-    UserService.getSudents().then((students)=>{
-        this.students=students;
-      })
-    }
+        if(this.type=='student'){
+            LessonService.getPastLessons(localStorage.getItem("userId")).then((lessons)=>{
+                this.pastLessons=lessons;
+            });
+            LessonService.getFutureLessons(localStorage.getItem("userId")).then((lessons)=>{
+                this.futureLessons=lessons;
+            });
+        }else{
+            UserService.getStudentsForTeacher(localStorage.getItem("userId")).then((response)=>{
+                this.students=response.data;
+            })
+        }
     },
     methods:{
         evaluate(id){

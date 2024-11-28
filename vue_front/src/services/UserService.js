@@ -76,9 +76,9 @@ class UserService{
           id:id
         }
        return axios.post(BACKEND_URL+'/teacher/v1/acceptRequest',data);
-        }
+      }
     
-        getAllPendingRequests() {
+      getAllPendingRequests() {
         return axios.get(BACKEND_URL+'/teacher/v1/getAllPendingRequests');
       }
     
@@ -203,6 +203,13 @@ class UserService{
       GetTeachersPerGradeLevel(){
         return axios.get(BACKEND_URL+'/teacher/v1/getTeachersPerGradeLevel')
       }
+
+      getStudentsForTeacher(id){
+        const data={
+          id:id
+        }
+        return axios.post(BACKEND_URL+'/teacher/v1/getStudents',data)
+    }
     
 }
 
