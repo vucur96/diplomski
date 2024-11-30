@@ -16,7 +16,7 @@
             <th>Time</th>
             <th>Description</th>
         </tr>
-        <tr v-for='r in requests' :key="r.id">
+        <tr v-for='r in lessons' :key="r.id">
             <td>{{r.student[0].firstName}}</td>
             <td>{{r.student[0].lastName}}</td>
             <td>{{r.subject.name}}</td>
@@ -26,7 +26,7 @@
             <td>{{r.description}}</td>
         </tr>
     </table>
-    <div v-if='requests.length==0'>
+    <div v-if='lessons.length==0'>
         No scheduled lessons yet.
     </div>  
 </div>
