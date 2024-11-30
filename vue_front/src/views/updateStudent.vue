@@ -13,7 +13,7 @@
                 <tr><td>Image:</td><td><RouterLink to="/addNewImage">Change</RouterLink></td></tr>
                 <tr><td>School:</td><td>{{school}}</td></tr>
                 <tr><td>Grade:</td><td>{{grade}}</td></tr>
-                <div v-if='addNewSchool=="true"'>
+                <div v-if='grade==8'>
                     <tr>
                         <td>New Schoole:</td>
                         <td><select v-model="newSchool" required>
@@ -63,10 +63,22 @@ export default{
         },
 
         incrementGrade(){
-            if(!(this.school!="ELEMENTARY" && this.grade==4) && this.newSchool!=""){
+            if(this.school=="ELEMENTARY"){
                 if(this.grade==8){
                     this.grade=1;
+                    if(this.newSchool!=""){
+                        this.addNewSchool=true;
+                        UserService.updateGrade(this.student.id,this.addNewSchool,this.grade,this.newSchool).then((response)=>{
+                            this.addNewSchool=false;
+                            this.student=response.data;
+                        });
+                    }
                 }else{
+                    this.grade++;
+                }
+            }
+            else{
+                if(this.grade<4){
                     this.grade++;
                 }
                 UserService.updateGrade(this.student.id,this.addNewSchool,this.grade,this.newSchool).then((response)=>{
