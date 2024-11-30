@@ -2,6 +2,7 @@ package etf.bg.diplomski.lesson;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -37,7 +38,13 @@ public interface LessonRepo extends JpaRepository<Lesson, Long> {
 
     List<Lesson> findByStudentsId(Long id);
 
+  @Query("SELECT l FROM Lesson l " +
+          "WHERE l.teacher.id = :id " +
+          "AND (l.date > :currentDate OR (l.date = :currentDate AND l.time > :currentTime)) " +
+          "ORDER BY l.date ASC, l.time ASC")
   List<Lesson> findByTeachersIdAndDateGreaterThanEqualAndTimeGreaterThanEqualOrderByDateAscTimeAsc(
-          Long teacherId, LocalDate currentDate, Time currentTime);
+          @Param("id") Long id,
+          @Param("currentDate") LocalDate currentDate,
+          @Param("currentTime") Time currentTime);
 
 }
