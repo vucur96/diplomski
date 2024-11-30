@@ -25,7 +25,7 @@
                 <td v-if="l.reviewForTeacher!=''">{{l.reviewForTeacher}}</td>
                 <td v-if="l.reviewForStudent==''&& l.reviewForTeacher==''"><input type="text" v-model="rating"></td>
                 <td v-if="l.reviewForTeacher!=''">{{l.ratingForTeacher}}</td>
-                <td v-if="l.reviewForStudent==''&& l.reviewForTeacher==''"><button @click="evaluate(l.id)" >Evaluate</button></td>
+                <td v-if="l.reviewForStudent==''&& l.reviewForTeacher==''"><button class="btn btn-secondary" @click="evaluate(l.id)" >Evaluate</button></td>
             </tr>
         </table>
         <div v-if='pastLessons.length==0'>
@@ -57,7 +57,7 @@
                 </tr>
                 <tr v-for='s in students' :key="s.id">
                     <td>{{s.firstName}} {{s.lastName}}</td>
-                    <td><button @click="details(s.id)">Details</button></td>
+                    <td><button class="btn btn-secondary" @click="details(s.id)">Details</button></td>
                 </tr>
             </table>
             <div v-if="students.length==0">
@@ -87,11 +87,11 @@ export default {
     created(){
         this.type=localStorage.getItem('userType');
         if(this.type=='student'){
-            LessonService.getPastLessons(localStorage.getItem("userId")).then((lessons)=>{
-                this.pastLessons=lessons;
+            LessonService.getPastLessons(localStorage.getItem("userId")).then((response)=>{
+                this.pastLessons=response.data;
             });
-            LessonService.getFutureLessons(localStorage.getItem("userId")).then((lessons)=>{
-                this.futureLessons=lessons;
+            LessonService.getFutureLessons(localStorage.getItem("userId")).then((response)=>{
+                this.futureLessons=response.data;
             });
         }else{
             UserService.getStudentsForTeacher(localStorage.getItem("userId")).then((response)=>{
@@ -102,13 +102,13 @@ export default {
     methods:{
         evaluate(id){
             lessonService.evaluateLesson(id,this.comment,this.rating).then(()=>{
-                this.$router.navigate(['/archive']);
+                router.push('/archive');
             })
         },
 
         details(id){
             localStorage.setItem("studentId",id.toString());
-            this.$router.navigate(['/studentDetails']);
+            router.push('/studentDetails');
         }
     },components:{
         MenuComponent

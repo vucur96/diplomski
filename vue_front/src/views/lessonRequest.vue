@@ -50,13 +50,13 @@ export default {
     methods:{
         accept(id){
             LessonService.acceptLessonRequest(id).then(()=>{
-                $router.push('lessonRequests')
+                router.push('/lessonRequests')
             });
         },
 
         reject(id){
             LessonService.rejectLessonRequest(id).then(()=>{
-                $router.push('lessonRequests')
+                router.push('/lessonRequests')
             });
         }
     },
