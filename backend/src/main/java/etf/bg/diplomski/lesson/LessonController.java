@@ -79,5 +79,11 @@ public class LessonController {
         return new ResponseEntity<>(lessonService.getLessonRequests(),HttpStatus.OK);
     }
 
+    @Operation(description = "Getting all pending lesson requests.")
+    @GetMapping(GET_TEACHERS_LESSONS)
+    public ResponseEntity<?> getLessonsForTeacher(@RequestBody IdDTO data){
+        return new ResponseEntity<>(lessonService.getLessonsForTeacher(data.id()),HttpStatus.OK);
+    }
+
 
 }

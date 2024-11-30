@@ -18,6 +18,7 @@ public class ApplicationURL {
     public static final String REJECT_LESSON_REQUEST = V1+"/rejectLessonRequest";
     public static final String GET_LESSON_REQUESTS = V1+"/getLessonRequests";
     public static final String GET_STUDENTS_LESSONS = V1+"/getStudentsLessons";
+    public static final String GET_TEACHERS_LESSONS = V1+"/getLessonsForTeacher";
     public static final String STUDENT_LOGIN = V1+"/studentLogin";
     public static final String ADD_STUDENT = V1+"/addStudent";
     public static final String GET_STUDENTS = V1+"/getStudents";

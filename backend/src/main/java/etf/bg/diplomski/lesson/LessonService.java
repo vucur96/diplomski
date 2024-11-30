@@ -178,4 +178,14 @@ public class LessonService {
         }
         return lessons;
     }
+
+    public List<LessonDTO> getLessonsForTeacher(Long id) {
+        List<Lesson> tempList = lessonRepo.findByTeachersIdAndDateGreaterThanEqualAndTimeGreaterThanEqualOrderByDateAscTimeAsc(id,LocalDate.now(), Time.valueOf(LocalTime.now()));
+        List<LessonDTO> lessons = new ArrayList<>();
+        for (Lesson lesson : tempList) {
+            LessonDTO temp = mapper.apply(lesson);
+            lessons.add(temp);
+        }
+        return lessons;
+    }
 }
