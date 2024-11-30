@@ -317,10 +317,10 @@ public class AppUserService {
         return temp;
     }
 
-    public Student updateGrade(Long studentId, boolean addNewSchool, SchoolType school, int grade) {
+    public Student updateGrade(Long studentId, boolean addNewSchool, String school, int grade) {
         Student temp = appUserRepo.findStudentById(studentId);
         if (addNewSchool) {
-            temp.setSchool(school);
+            temp.setSchool(SchoolType.valueOf(school));
         }
         temp.setStudentGrade(grade);
         return appUserRepo.save(temp);

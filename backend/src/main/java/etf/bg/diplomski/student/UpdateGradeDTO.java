@@ -5,7 +5,7 @@ import etf.bg.diplomski.common.SchoolType;
 public record UpdateGradeDTO(
         Long studentId,
         boolean addNewSchool,
-        SchoolType newSchool,
+        String newSchool,
         int grade
 ) {
 }
