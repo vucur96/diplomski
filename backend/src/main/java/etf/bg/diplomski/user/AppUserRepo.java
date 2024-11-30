@@ -99,5 +99,5 @@ public interface AppUserRepo extends JpaRepository<AppUser, Long> {
   List<Object[]> getStudentsGendersPercantage();
 
   @Query(value = "SELECT * FROM app_user WHERE type='Student'",nativeQuery = true)
-    Collection<Object> findStudentsForTeacher(Long id);
+    Collection<Student> findStudentsForTeacher(Long id);
 }
