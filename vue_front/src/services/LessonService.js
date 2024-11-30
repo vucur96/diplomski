@@ -25,7 +25,7 @@ class LessonService{
     const data={
       id:id
     }
-    return axios.post(BACKEND_URL+'/teacher/v1/getLessonsForTeacher',data);
+    return axios.post(BACKEND_URL+'/lesson/v1/getLessonsForTeacher',data);
   }
 
   evaluateLesson(id,comment,rating) {
