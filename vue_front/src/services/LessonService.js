@@ -21,11 +21,11 @@ class LessonService{
     return axios.post(BACKEND_URL+'/lesson/v1/getStudentsLessons',data);
   }
 
-  getNextFiveLessons(id) {
+  getLessonsForTeacher(id) {
     const data={
       id:id
     }
-    return axios.post(BACKEND_URL+'/teacher/v1/getNextFiveLessons',data);
+    return axios.post(BACKEND_URL+'/teacher/v1/getLessonsForTeacher',data);
   }
 
   evaluateLesson(id,comment,rating) {

@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeComponent from '@/views/HomeComponent.vue'
 import LoginCoponent from '@/views/LoginCoponent.vue'
 import RegisterComponent from '@/views/register.vue'
-import ProfilComponent from '@/views/profil.vue'
 import PasswordChangeComponent from '@/views/changePassword.vue'
 import StudentsComponent from '@/views/students.vue'
 import TeachersComponent from '@/views/teachers.vue'
@@ -17,6 +16,8 @@ import AdminHomeComponent from '@/views/adminHome.vue'
 import AddNewImageComponent from '@/views/addNewImage.vue'
 import HistoryComponent from '@/views/history.vue'
 import updateTeacherInfo from '@/views/updateTeacherInfo.vue'
+import LessonsComponent from '@/views/Lessons.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -105,6 +106,11 @@ const router = createRouter({
       path:'/archive',
       name:'archive',
       component:HistoryComponent
+    },
+    {
+      path:'/lessons',
+      name:'lessons',
+      component:LessonsComponent
     },
     {
       path:'/lessonRequests',

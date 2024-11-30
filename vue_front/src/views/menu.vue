@@ -4,7 +4,8 @@
     <RouterLink class="link"  to='/updateStudent' v-if="type=='student'"> Profil </RouterLink> 
     <RouterLink  class="link" to='/updateTeacher' v-if="type=='teacher'"> Profil</RouterLink> 
     <RouterLink class="link" v-if='type=="student"' to='/teachers'> Teachers </RouterLink> 
-    <RouterLink v-if="type=='student'|| type=='teacher'"  class="link"  to='/archive'>History </RouterLink>
+    <RouterLink v-if="type=='student'"  class="link"  to='/archive'>History </RouterLink>
+    <RouterLink v-if="type=='teacher'"  class="link"  to='/lessons'>My Lessons </RouterLink>
     <RouterLink class="link" v-if='type=="teacher"' to='/lessonRequests'>Lesson requests </RouterLink>
     <RouterLink v-if='type=="teacher"' class='link' to='/teacher'> Home </RouterLink> 
     <RouterLink v-if='type=="student"' class='link' to='/student'> Home </RouterLink>
