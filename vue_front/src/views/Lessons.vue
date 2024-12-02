@@ -17,8 +17,8 @@
             <th>Description</th>
         </tr>
         <tr v-for='r in lessons' :key="r.id">
-            <td>{{r.student[0].firstName}}</td>
-            <td>{{r.student[0].lastName}}</td>
+            <td>{{r.students[0].firstName}}</td>
+            <td>{{r.students[0].lastName}}</td>
             <td>{{r.subject.name}}</td>
             <td>{{r.studentsScore}}</td>
             <td>{{r.date}}</td>
