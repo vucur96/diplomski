@@ -51,21 +51,13 @@ public class SubjectController {
                   @ApiResponse(description = "Error",responseCode = "400")})
   @PostMapping(DELETE_SUBJECT)
   public ResponseEntity<?> deleteSubject(@RequestBody SubjectNameDTO data) {
-    if (subjectService.haveSubjectWithName(data.name())) {
-      subjectService.deleteSubject(data.name());
-    } else {
-      return new ResponseEntity<>("No subject with that name.", HttpStatus.BAD_REQUEST);
-    }
+    subjectService.deleteSubject(data.name());
     return new ResponseEntity<>("Subject deleted!", HttpStatus.OK);
   }
 
   @PostMapping(ACCEPT_SUBJECT)
   public ResponseEntity<?> acceptSubject(@RequestBody SubjectNameDTO data) {
-    if (subjectService.haveSubjectWithName(data.name())) {
-      subjectService.acceptSubject(data.name());
-    } else {
-      return new ResponseEntity<>("No subject with that name.", HttpStatus.BAD_REQUEST);
-    }
+    subjectService.acceptSubject(data.name());
     return new ResponseEntity<>("Subject accepted!", HttpStatus.OK);
   }
 
