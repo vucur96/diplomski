@@ -144,7 +144,7 @@ public class AppUserService {
      */
     public Long addStudent(RegStudentDTO student) throws IOException,IllegalArgumentException {
 
-        String uploadsDir = "uploads/";
+        String uploadsDir = "/backend/uploads/";
         Path uploadPath = Paths.get(uploadsDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -153,7 +153,6 @@ public class AppUserService {
 
         Files.copy(student.images().getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println("Photo saved at: " + filePath);
 
         Student user =
                 new Student(
