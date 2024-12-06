@@ -17,7 +17,7 @@
                 <td>{{s.phone}}</td>
                 <td>{{s.address}}</td>
                 <td>{{s.email}}</td>
-                <td><img :src="'http://localhost:8084/' + s.imgURL" width="50" height="50" alt="Image not found"></td>            
+                <td><img :src="getImageUrl(s.imgURL)" width="50" height="50" alt="Image not found"></td>            
             </tr>
         </table>
         <p v-if='students.length==0'>We don't have any students!</p>
@@ -40,6 +40,12 @@ export default {
         UserService.getStudents().then((response)=>{
       this.students=response.data;
     })},
+    methods:{
+        getImageUrl(imgURL) {
+            const fixedUrl = imgURL.replace('/backend', '');
+            return `http://localhost:8084${fixedUrl}`;
+        }
+    },
     components:{
         MenuComponent
     }
