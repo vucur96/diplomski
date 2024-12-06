@@ -17,6 +17,8 @@ services:
       - SPRING_DATASOURCE_PASSWORD=tamara
     ports:
       - 8084:8084
+    volumes:
+      - uploads-volume:/backend/uploads 
     networks:
       - app-network
   database:
@@ -35,6 +37,7 @@ services:
  
 volumes:
   pgdata:
+  uploads-volume:
 
 networks:
   app-network:
