@@ -17,7 +17,7 @@
                 <td>{{s.phone}}</td>
                 <td>{{s.address}}</td>
                 <td>{{s.email}}</td>
-                <td><img v-bind:src=s.imgURL width="50" height="50" alt="Image not found"></td>            
+                <td><img :src="s.imgURL" width="50" height="50" alt="Image not found"></td>            
             </tr>
         </table>
         <p v-if='students.length==0'>We don't have any students!</p>

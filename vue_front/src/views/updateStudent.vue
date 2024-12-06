@@ -13,17 +13,17 @@
                 <tr><td>Image:</td><td><RouterLink to="/addNewImage">Change</RouterLink></td></tr>
                 <tr><td>School:</td><td>{{school}}</td></tr>
                 <tr><td>Grade:</td><td>{{grade}}</td></tr>
-                <div v-if='grade==8'>
-                    <tr>
-                        <td>New Schoole:</td>
-                        <td><select v-model="newSchool" required>
-                            <option  value="SECONDERY_SCHOOL_GYMNASIUM">Secondery-gymnasium</option>
-                            <option  value="SPECIALIZED_SECONDERY_SCHOOL">Specialized secondery school</option>
-                            <option  value="SECONDARY_ART_SCHOOL">Secondary art school</option>
-                        </select>
-                        </td>
-                    </tr>
-                </div>
+
+                <tr v-if='grade==8'>
+                    <td>New Schoole:</td>
+                    <td><select v-model="newSchool" required>
+                        <option  value="SECONDERY_SCHOOL_GYMNASIUM">Secondery-gymnasium</option>
+                        <option  value="SPECIALIZED_SECONDERY_SCHOOL">Specialized secondery school</option>
+                        <option  value="SECONDARY_ART_SCHOOL">Secondary art school</option>
+                    </select>
+                    </td>
+                </tr>
+
                 <tr ><td colspan="2" class="text-center"><button class="btn btn-secondary" @click="incrementGrade">Next grade</button></td></tr> 
                 <tr><td colspan="2" class="text-center"><button class="btn btn-secondary" @click="update">Update</button></td></tr>
             </tbody>

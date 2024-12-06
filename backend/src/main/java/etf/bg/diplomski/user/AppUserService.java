@@ -24,11 +24,9 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static etf.bg.diplomski.common.UserStatus.ACTIVE;
 import static etf.bg.diplomski.common.UserStatus.PENDING;
@@ -141,19 +139,21 @@ public class AppUserService {
     /**
      *
      * @param student
-     * @return
+     * @return id
      * @throws IOException
      */
     public Long addStudent(RegStudentDTO student) throws IOException,IllegalArgumentException {
 
-        String basePath = System.getProperty("user.dir");
-        Path imageFolderPath = Paths.get(basePath, "..", "vue_front", "public", "assets", "Images");
+        String uploadsDir = "uploads/";
+        Path uploadPath = Paths.get(uploadsDir);
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        String filePath = uploadsDir + UUID.randomUUID() + "_" + student.images().getOriginalFilename();
 
-        Files.createDirectories(imageFolderPath);
+        Files.copy(student.images().getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
 
-        student.images()
-                .transferTo(new File(imageFolderPath + "/" + student.images().getOriginalFilename()));
-
+        System.out.println("Photo saved at: " + filePath);
 
         Student user =
                 new Student(
@@ -165,7 +165,7 @@ public class AppUserService {
                         student.phone(),
                         student.email(),
                         student.gender(),
-                        "/assets/Images/" + student.images().getOriginalFilename(),
+                        filePath,
                         ACTIVE,
                         student.school(),
                         student.grade());

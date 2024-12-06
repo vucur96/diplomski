@@ -18,53 +18,6 @@ import java.util.List;
 @Data
 public class Lesson extends BaseClass {
 
-    public Lesson(Subject subject, Teacher teacher, Student student, LessonStatus lessonStatus, LocalDate date, Time time, String description) {
-        super();
-        this.subject=subject;
-        this.teacher=teacher;
-        this.students=new ArrayList<>();
-        this.students.add(student);
-        this.status=lessonStatus;
-        this.date=date;
-        this.time=time;
-        this.message=description;
-        this.reviewForStudent="";
-        this.ratingForStudent=-1;
-        this.reviewForTeacher="";
-        this.ratingForTeacher=-1;
-    }
-
-    @Override
-  public String toString() {
-    return "Lesson{"
-        + "students="
-        + students
-        + ", teacher="
-        + teacher
-        + ", subject="
-        + subject
-        + ", date="
-        + date
-        + ", time="
-        + time
-        + ", status="
-        + status
-        + ", message='"
-        + message
-        + '\''
-        + ", ratingForStudent="
-        + ratingForStudent
-        + ", reviewForStudent='"
-        + reviewForStudent
-        + '\''
-        + ", ratingForTeacher="
-        + ratingForTeacher
-        + ", reviewForTeacher='"
-        + reviewForTeacher
-        + '\''
-        + '}';
-  }
-
   @ManyToMany
   @JoinTable(
       name = "students_lessons",
@@ -94,4 +47,52 @@ public class Lesson extends BaseClass {
   private String reviewForStudent;
   private Integer ratingForTeacher;
   private String reviewForTeacher;
+
+
+    public Lesson(Subject subject, Teacher teacher, Student student, LessonStatus lessonStatus, LocalDate date, Time time, String description) {
+        super();
+        this.subject=subject;
+        this.teacher=teacher;
+        this.students=new ArrayList<>();
+        this.students.add(student);
+        this.status=lessonStatus;
+        this.date=date;
+        this.time=time;
+        this.message=description;
+        this.reviewForStudent="";
+        this.ratingForStudent=-1;
+        this.reviewForTeacher="";
+        this.ratingForTeacher=-1;
+    }
+
+    @Override
+    public String toString() {
+        return "Lesson{"
+                + "students="
+                + students
+                + ", teacher="
+                + teacher
+                + ", subject="
+                + subject
+                + ", date="
+                + date
+                + ", time="
+                + time
+                + ", status="
+                + status
+                + ", message='"
+                + message
+                + '\''
+                + ", ratingForStudent="
+                + ratingForStudent
+                + ", reviewForStudent='"
+                + reviewForStudent
+                + '\''
+                + ", ratingForTeacher="
+                + ratingForTeacher
+                + ", reviewForTeacher='"
+                + reviewForTeacher
+                + '\''
+                + '}';
+    }
 }

@@ -139,7 +139,7 @@ public class LessonService {
             lesson = temp.get();
             lesson.setStatus(LessonStatus.APPROVED);
         } else {
-            throw new LessonNotFounsException();
+            throw new LessonNotFoundException();
         }
         return lessonRepo.save(lesson);
     }
@@ -151,7 +151,7 @@ public class LessonService {
             lesson = temp.get();
             lesson.setStatus(LessonStatus.DECLINED);
         } else {
-            throw new LessonNotFounsException();
+            throw new LessonNotFoundException();
         }
         return lessonRepo.save(lesson);
     }
@@ -162,7 +162,7 @@ public class LessonService {
         if (temp.isPresent()) {
             lesson = temp.get();
         } else {
-            throw new LessonNotFounsException();
+            throw new LessonNotFoundException();
         }
         lesson.setReviewForTeacher(comment);
         lesson.setRatingForTeacher(rating);
