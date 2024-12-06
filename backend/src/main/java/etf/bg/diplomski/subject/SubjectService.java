@@ -17,7 +17,9 @@ public class SubjectService {
   @Autowired private SubjectRepo subjectRepo;
 
   public Subject addSubject(SubjectDTO subject) {
-
+    if(subjectRepo.findByName(subject.name()).isPresent()){
+      throw new SubjectAlreadyExistsException();
+    }
     Subject s = new Subject(subject.name(), subject.status(), subject.description());
     return subjectRepo.save(s);
   }
@@ -40,10 +42,6 @@ public class SubjectService {
       throw new SubjectNotFoundException();
     }
     subjectRepo.delete(subject);
-  }
-
-  public boolean haveSubjectWithName(String name) {
-      return subjectRepo.findByName(name).isPresent();
   }
 
   public Subject getSubjectByName(String name) {

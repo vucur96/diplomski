@@ -1,5 +1,6 @@
 package etf.bg.diplomski.subject;
 
+import etf.bg.diplomski.common.WebConfig;
 import etf.bg.diplomski.teacher.TeacherToSubjectCountDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,10 +25,12 @@ public class SubjectController {
   @Operation(description = "Adding new subject to database.")
   @PostMapping(ADD_SUBJECT)
   public ResponseEntity<?> addSubject(@RequestBody SubjectDTO subject) {
-    if (subjectService.getSubjectByName(subject.name())==null) {
-      return new ResponseEntity<>("Subject with that name already exist.", HttpStatus.BAD_REQUEST);
+    try{
+      Subject newSubject=subjectService.addSubject(subject);
+      return new ResponseEntity<>(newSubject, HttpStatus.OK );
+    }catch (SubjectAlreadyExistsException e){
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.OK );
     }
-    return new ResponseEntity<>(subjectService.addSubject(subject), HttpStatus.OK );
   }
 
   @Operation(description = "Getting all subjects.")
